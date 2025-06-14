@@ -158,7 +158,7 @@ The Breast Cancer Surveillance Consortium (BCSC) dataset contains millions of ma
 [Learn more about BCSC](https://www.bcsc-research.org/)
 """)
     # Figure 1: Age of participant by group
-    st.image("figures/age", width=900)
+    st.image("figures/age.png", width=900)
     st.markdown("""
 The majority of study participants fall in the 45–74 age range, with the highest counts in the 50–59 and 55–59 age groups.
 """)
