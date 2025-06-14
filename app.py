@@ -146,25 +146,17 @@ The largest number of participants, both with and without breast cancer history,
 """)
 
 # Figure 3: first degree cancer history
-st.image("figures/family_his.jpg", width=450)
+st.image("figures/family_history.jpg", width=450)
 st.markdown("""
 Most participants do not have a first-degree family history of breast cancer, regardless of their own cancer history. However, among those with a history of breast cancer (orange bars), a larger proportion report a family history of the disease compared to those without cancer.
 """)
 
 # Figure 4: Feature Importance
-st.image("figures/feature_importance.jpg", width=450)
+st.image("figures/feature_importance_xgb.jpg", width=450)
 st.markdown("""
 **Which Factors Matter Most?**  
 The feature importance plot shows which risk factors contribute most to the model's predictions.
 """)
-
-# Figure 5: Risk Calculation Pipeline
-st.image("figures/prediction_pipeline.png", width=450)
-st.markdown("""
-**How is Your Risk Calculated?**  
-Your answers are transformed into numbers and passed into our trained XGBoost model, which outputs a probability. This is compared to a data-driven threshold to classify your risk as low or high.
-""")
-
 
 # --- Tab 2: 5-Year Survival Predictor ---
 with tab2:
