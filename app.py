@@ -18,7 +18,7 @@ st.markdown("""
     margin-bottom: 0.5em;
 }
 .header-logo {
-    font-size: 4.5rem;
+    font-size: 4.0rem;
     font-weight: bold;
     color: #FFD700;
     margin-right: 1.2em;
@@ -46,28 +46,11 @@ st.markdown(
     """
     <div class="header-row">
         <div class="header-logo">🎗️ EmpowerHER</div>
-        <img src="figures/title_icon.jpg" class="header-img"/>
-        <img src="figures/grow.jpg" class="header-img"/>
         <div class="tabs-container"></div>
     </div>
     """,
     unsafe_allow_html=True
 )
-
-# ---- Tabs (these will be right below the header bar) ----
-tab1, tab2, tab3 = st.tabs(["Risk Insights", "Thrive Prediction", "Mind & Move"])
-
-# ---- Example content per tab ----
-with tab1:
-    st.write("Risk Insights tab content here.")
-
-with tab2:
-    st.write("Thrive Prediction tab content here.")
-
-with tab3:
-    st.write("Mind & Move tab content here.")
-
-
 
 # Load models and data
 BASE_DIR = Path(__file__).resolve().parent
