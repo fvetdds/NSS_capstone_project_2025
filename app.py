@@ -8,37 +8,44 @@ from pathlib import Path
 st.set_page_config(page_title="Breast Cancer Risk & Survival", layout="wide")
 st.markdown("""
 <style>
-.header-row {
-    display: flex;
-    align-items: center;
-    background: #000;
-    padding: 0.8em 1.2em 0.8em 1.2em;
-    border-radius: 0 0 20px 20px;
-    margin-bottom: 0.5em;
+/* Tab row: subtle thin line (gold) under all tabs */
+.stTabs [role="tablist"] {
+    border-bottom: 2.5px solid #FFD700 !important;   /* gold underline */
+    margin-bottom: 1.2em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
 }
-.header-logo {
-    font-size: 4.0rem;
-    font-weight: bold;
+
+/* Tabs: no background, just floating text with spacing */
+.stTabs [data-baseweb="tab"] {
+    font-size: 1.22rem;
+    font-weight: 700;
     color: #FFD700;
-    margin-right: 1.2em;
-    display: flex;
-    align-items: center;
+    background: transparent !important;
+    margin-right: 2.5em !important;  /* space between tabs */
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0.65em 0.8em 0.65em 0.8em;
+    border-radius: 0;
+    transition: color 0.2s, border-bottom 0.2s;
 }
-.header-img {
-    height: 56px;
-    margin-right: 1em;
-    border-radius: 10px;
-    background: #232323;
-    box-shadow: 0 2px 10px #3334;
+
+/* Only active tab gets the underline (thicker and gold) */
+.stTabs [aria-selected="true"] {
+    color: #FFD700 !important;
+    border-bottom: 4px solid #FFD700 !important;
+    font-weight: 900;
+    background: transparent !important;
 }
-.tabs-container {
-    flex-grow: 1;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
+
+/* Optional: hover effect */
+.stTabs [data-baseweb="tab"]:hover {
+    color: #fff700 !important;   /* slightly lighter yellow */
+    background: transparent !important;
 }
 </style>
 """, unsafe_allow_html=True)
+
 
 # ---- Custom header: title + images + empty for tabs ----
 st.markdown(
@@ -138,25 +145,25 @@ The Breast Cancer Surveillance Consortium (BCSC) dataset contains millions of ma
 [Learn more about BCSC](https://www.bcsc-research.org/)
 """)
     # Figure 1: Age of participant by group
-    st.image("figures/age.png", width=450)
+    st.image("figures/age.png", use_column_width=True)
     st.markdown("""
 The majority of study participants fall in the 45–74 age range, with the highest counts in the 50–59 and 55–59 age groups.
 """)
 
     # Figure 2: BMI by group
-    st.image("figures/bmi.png", width=450)
+    st.image("figures/bmi.png", use_column_width=True)
     st.markdown("""
 The largest number of participants, both with and without breast cancer history, are in the lower BMI groups (10–24.99 and 25–29.99).
 """)
 
     # Figure 3: first degree cancer history
-    st.image("figures/family_history.png", width=450)
+    st.image("figures/family_history.png", use_column_width=True)
     st.markdown("""
 Most participants do not have a first-degree family history of breast cancer, regardless of their own cancer history. However, among those with a history of breast cancer (orange bars), a larger proportion report a family history of the disease compared to those without cancer.
 """)
 
     # Figure 4: Feature Importance
-    st.image("figures/feature_importance_xgb.png", width=450)
+    st.image("figures/feature_importance_xgb.png", use_column_width=True)
     st.markdown("""
 **Which Factors Matter Most?**  
 The feature importance plot shows which risk factors contribute most to the model's predictions.
