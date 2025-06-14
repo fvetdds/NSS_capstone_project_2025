@@ -5,78 +5,49 @@ import joblib
 from pathlib import Path
 
 # Page config
-st.set_page_config(page_title="Breast Cancer Risk & Survival", layout="wide")
+st.set_page_config(page_title="Breast Cancer Risk prediction", layout="wide")
 st.markdown("""
 <style>
-/* Tab row: subtle thin line (gold) under all tabs */
+/* Tab row: single gold line under all tabs */
 .stTabs [role="tablist"] {
-    border-bottom: 2.5px solid #FFD700 !important;   /* gold underline */
-    margin-bottom: 1.2em;
+    border-bottom: 3px solid #FFD700 !important;   /* gold underline */
+    margin-bottom: 2em;
     padding-left: 0.5em;
     padding-right: 0.5em;
 }
 
-/* Tabs: no background, just floating text with spacing */
+/* Tabs: floating text, spaced, bold on active */
 .stTabs [data-baseweb="tab"] {
-    font-size: 1.22rem;
-    font-weight: 700;
+    font-size: 1.17rem;
+    font-weight: 600;
     color: #FFD700;
     background: transparent !important;
-    margin-right: 2.5em !important;  /* space between tabs */
+    margin-right: 2.5em !important;
     border: none !important;
     box-shadow: none !important;
-    padding: 0.65em 0.8em 0.65em 0.8em;
+    padding: 0.7em 1.5em 0.7em 1.5em;
     border-radius: 0;
-    transition: color 0.2s, border-bottom 0.2s;
+    transition: color 0.2s;
 }
 
-/* Only active tab gets the underline (thicker and gold) */
+/* Active tab: just gold color and bold, no extra underline */
 .stTabs [aria-selected="true"] {
     color: #FFD700 !important;
-    border-bottom: 4px solid #FFD700 !important;
     font-weight: 900;
     background: transparent !important;
+    border-bottom: none !important;
+}
+
+/* Inactive tab: softer gold */
+.stTabs [data-baseweb="tab"]:not([aria-selected="true"]) {
+    color: #c1a400 !important;
+    font-weight: 600;
 }
 
 /* Optional: hover effect */
 .stTabs [data-baseweb="tab"]:hover {
-    color: #fff700 !important;   /* slightly lighter yellow */
+    color: #fff700 !important;
     background: transparent !important;
-}
-</style>
-""", unsafe_allow_html=True)
-
-
-# ---- Custom header: title + images + empty for tabs ----
-st.markdown(
-    """
-    <div class="header-row">
-        <div class="header-logo">🎗️ EmpowerHER</div>
-        <div class="tabs-container"></div>
-    </div>
-    """,
-    unsafe_allow_html=True
-)
-
-# --- Add tab highlight CSS after header
-st.markdown("""
-<style>
-.stTabs [data-baseweb="tab"] {
-    font-size: 1.2rem;
-    color: #008080;  /* teal */
-    background: #FFD700;
-    border-bottom: 2px solid transparent;
-    transition: border-color 0.3s;
-}
-.stTabs [aria-selected="true"] {
-    font-weight: bold;
-    color: #fff !important;     /* white text */
-    border-bottom: 4px solid #ffd700 !important;  /* thick gold underline */
-    background: #232323;        /* slight dark bg */
-}
-.stTabs [role="tablist"] {
-    border-bottom: 1px solid #ffd700;
-    margin-bottom: 2em;
 }
 </style>
 """, unsafe_allow_html=True)
