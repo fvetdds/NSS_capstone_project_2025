@@ -1,3 +1,4 @@
+pip install streamlit-gauge
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -101,6 +102,8 @@ with tab2:
         st.success(f"{icon} {risk_str} (threshold = {threshold:.2f})")
 
 # --- TAB 3: MIND & MOVE ---
+from streamlit_gauge import st_gauge
+from streamlit_gauge import st_gauge
 
 # Set daily goals
 MEDITATE_GOAL = 10     # minutes
@@ -117,15 +120,33 @@ with tab3:
     col1, col2, col3 = st.columns(3)
     with col1:
         meditate_mins = st.number_input("Meditation minutes", min_value=0, max_value=60, value=0)
-        st.progress(min(meditate_mins / MEDITATE_GOAL, 1.0))
+        st_gauge(
+            value=meditate_mins,
+            min_value=0,
+            max_value=MEDITATE_GOAL,
+            label="Meditation Progress",
+            color="green" if meditate_mins >= MEDITATE_GOAL else "orange",
+        )
         st.caption(f"{meditate_mins}/{MEDITATE_GOAL} min")
     with col2:
         exercise_mins = st.number_input("Exercise minutes", min_value=0, max_value=180, value=0)
-        st.progress(min(exercise_mins / EXERCISE_GOAL, 1.0))
+        st_gauge(
+            value=exercise_mins,
+            min_value=0,
+            max_value=EXERCISE_GOAL,
+            label="Exercise Progress",
+            color="green" if exercise_mins >= EXERCISE_GOAL else "orange",
+        )
         st.caption(f"{exercise_mins}/{EXERCISE_GOAL} min")
     with col3:
         water_glasses = st.number_input("Glasses of water", min_value=0, max_value=20, value=0)
-        st.progress(min(water_glasses / WATER_GOAL, 1.0))
+        st_gauge(
+            value=water_glasses,
+            min_value=0,
+            max_value=WATER_GOAL,
+            label="Hydration Progress",
+            color="blue" if water_glasses >= WATER_GOAL else "orange",
+        )
         st.caption(f"{water_glasses}/{WATER_GOAL} glasses")
     diet_log = st.text_area("Diet log (meals/snacks)")
     if st.button("Save Entry"):
@@ -138,6 +159,7 @@ with tab3:
         }
         st.success("Your daily wellness entry has been recorded!")
         st.json(entry)
+
     st.subheader("Additional Resources")
     st.markdown("**YouTube Videos:**")
     videos = {
