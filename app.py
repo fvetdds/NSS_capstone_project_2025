@@ -8,59 +8,90 @@ from pathlib import Path
 st.set_page_config(page_title="Breast Cancer Risk prediction", layout="wide")
 st.markdown("""
 <style>
-/* Tab row: single gold line under all tabs */
-.stTabs [role="tablist"] {
-    border-bottom: 3px solid #FFD700 !important;   /* gold underline */
-    margin-bottom: 2em;
-    padding-left: 0.5em;
-    padding-right: 0.5em;
+.empowerher-navbar {
+    display: flex;
+    align-items: center;
+    background: #000;
+    padding: 1.1em 1.5em 1.1em 1.5em;
+    border-radius: 0 0 18px 18px;
+    margin-bottom: 0.6em;
+    width: 100vw;
+    min-width: 100vw;
+    position: relative;
+    left: -2.7vw; /* Adjust for Streamlit default container padding */
+}
+.empowerher-logo {
+    font-size: 2.3rem;
+    font-weight: bold;
+    color: #FFD700;
+    display: flex;
+    align-items: center;
+    margin-right: 3.2em;
+    white-space: nowrap;
+}
+.empowerher-logo span {
+    font-size: 2rem;
+    margin-right: 0.6em;
 }
 
-/* Tabs: floating text, spaced, bold on active */
+/* Adjust tab bar position to be inline with branding */
+.stTabs [role="tablist"] {
+    border-bottom: none !important;
+    background: transparent !important;
+    align-items: center;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    display: flex !important;
+}
+
+/* Tab styling: match the black bar, space out, remove underline */
 .stTabs [data-baseweb="tab"] {
-    font-size: 2.17rem;
-    font-weight: 600;
+    font-size: 1.4rem !important;
+    font-weight: 800 !important;
     color: #FFD700;
     background: transparent !important;
-    margin-right: 2.5em !important;
+    margin-right: 2.4em !important;
     border: none !important;
     box-shadow: none !important;
-    padding: 0.7em 1.5em 0.7em 1.5em;
-    border-radius: 0;
-    transition: color 0.2s;
+    padding: 0.2em 1.1em 0.2em 1.1em;
+    border-radius: 12px 12px 0 0 !important;
+    transition: color 0.18s, background 0.18s;
+    position: relative;
+    top: 2px;
 }
 
-/* Active tab: just gold color and bold, no extra underline */
+/* Brighter yellow when tab is active */
 .stTabs [aria-selected="true"] {
-    color: #FFD700 !important;
-    font-weight: 900;
-    background: transparent !important;
+    color: #FFEB3B !important;           /* brighter yellow for active */
+    background: #181818 !important;      /* subtle dark bg for active */
+    font-weight: 900 !important;
     border-bottom: none !important;
+    box-shadow: 0 -4px 18px 0 #FFD70022;
+    border-radius: 12px 12px 0 0 !important;
 }
 
-/* Inactive tab: softer gold */
+/* Inactive tab: gold */
 .stTabs [data-baseweb="tab"]:not([aria-selected="true"]) {
-    color: #c1a400 !important;
-    font-weight: 600;
+    color: #FFD700 !important;
+    background: transparent !important;
+    font-weight: 700 !important;
 }
 
-/* Optional: hover effect */
+/* Optional: subtle hover */
 .stTabs [data-baseweb="tab"]:hover {
     color: #fff700 !important;
-    background: transparent !important;
+    background: #222 !important;
 }
 </style>
-""", unsafe_allow_html=True)
-st.markdown(
-    """
-    <div style='display: flex; align-items: center; background: #000; padding: 1.1em 1.5em 1.1em 1.5em; border-radius: 0 0 22px 22px; margin-bottom: 1.7em;'>
-        <span style='font-size: 2.6rem; font-weight: bold; color: #FFD700; display: flex; align-items: center;'>
-            <span style="font-size:2.2rem;margin-right:0.7em;">🎗️</span> EmpowerHER
-        </span>
+
+<!-- Custom black strip with logo/branding -->
+<div class="empowerher-navbar">
+    <div class="empowerher-logo">
+        <span>🎗️</span> EmpowerHER
     </div>
-    """,
-    unsafe_allow_html=True
-)
+</div>
+""", unsafe_allow_html=True)
 
 
 # Load models and data
