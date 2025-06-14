@@ -4,7 +4,6 @@ import numpy as np
 import joblib
 from pathlib import Path
 
-
 # Page config
 st.set_page_config(page_title="Breast Cancer Risk & Survival", layout="wide")
 st.markdown("""
@@ -54,7 +53,6 @@ st.markdown(
 
 # Load models and data
 BASE_DIR = Path(__file__).resolve().parent
-# Classification model
 model = joblib.load(BASE_DIR / "models" / "bcsc_xgb_model.pkl")
 threshold = joblib.load(BASE_DIR / "models" / "threshold.pkl")
 
@@ -64,34 +62,35 @@ tab1, tab2 = st.tabs(["Risk Insights", "Mind & Move"])
 # --- Tab 1: Breast Cancer Risk Predictor ---
 with tab1:
     st.sidebar.header("Your information for risk prediction")
+
     def sel(label, opts):
         return st.sidebar.selectbox(label, list(opts.keys()), format_func=lambda k: opts[k])
 
     # Define dropdown options
-            age_groups  = {1:"18–29", 2:"30–34", 3:"35–39", 4:"40–44", 5:"45–49", 6:"50–54", 7:"55–59", 8:"60–64", 9:"65–69", 10:"70–74", 11:"75–79", 12:"80–84", 13:">85"}
-            race_eth    = {1:"White", 2:"Black", 3:"Asian or Pacific Island", 4:"Native American", 5:"Hispanic", 6:"Other"}
-            menarche    = {0:">14", 1:"12–13", 2:"<12"}
-            birth_age   = {0:"<20", 1:"20–24", 2:"25–29", 3:">30", 4:"Nulliparous"}
-            fam_hist    = {0:"No", 1:"Yes"}
-            biopsy      = {0:"No", 1:"Yes"}
-            density     = {1:"Almost fat", 2:"Scattered", 3:"Hetero-dense", 4:"Extremely"}
-            hormone_use = {0:"No", 1:"Yes"}
-            menopause   = {1:"Pre/peri", 2:"Post", 3:"Surgical"}
-            bmi_group   = {1:"10–24.9", 2:"25–29.9", 3:"30–34.9", 4:"35+"}
+    age_groups  = {1:"18–29", 2:"30–34", 3:"35–39", 4:"40–44", 5:"45–49", 6:"50–54", 7:"55–59", 8:"60–64", 9:"65–69", 10:"70–74", 11:"75–79", 12:"80–84", 13:">85"}
+    race_eth    = {1:"White", 2:"Black", 3:"Asian or Pacific Island", 4:"Native American", 5:"Hispanic", 6:"Other"}
+    menarche    = {0:">14", 1:"12–13", 2:"<12"}
+    birth_age   = {0:"<20", 1:"20–24", 2:"25–29", 3:">30", 4:"Nulliparous"}
+    fam_hist    = {0:"No", 1:"Yes"}
+    biopsy      = {0:"No", 1:"Yes"}
+    density     = {1:"Almost fat", 2:"Scattered", 3:"Hetero-dense", 4:"Extremely"}
+    hormone_use = {0:"No", 1:"Yes"}
+    menopause   = {1:"Pre/peri", 2:"Post", 3:"Surgical"}
+    bmi_group   = {1:"10–24.9", 2:"25–29.9", 3:"30–34.9", 4:"35+"}
 
     # Collect sidebar inputs
-            inputs = {
-            "age_group":         sel("Age group", age_groups),
-            "race_eth":          sel("Race/Ethnicity", race_eth),
-            "age_menarche":      sel("Age at 1st period", menarche),
-            "age_first_birth":   sel("Age at first birth", birth_age),
-            "family_history":    sel("Family history of cancer", fam_hist),
-            "personal_biopsy":   sel("Personal biopsy history", biopsy),
-            "density":           sel("BI-RADS density", density),
-            "hormone_use":       sel("Hormone use", hormone_use),
-            "menopausal_status": sel("Menopausal status", menopause),
-            "bmi_group":         sel("BMI group", bmi_group),
-            }
+    inputs = {
+        "age_group":         sel("Age group", age_groups),
+        "race_eth":          sel("Race/Ethnicity", race_eth),
+        "age_menarche":      sel("Age at 1st period", menarche),
+        "age_first_birth":   sel("Age at first birth", birth_age),
+        "family_history":    sel("Family history of cancer", fam_hist),
+        "personal_biopsy":   sel("Personal biopsy history", biopsy),
+        "density":           sel("BI-RADS density", density),
+        "hormone_use":       sel("Hormone use", hormone_use),
+        "menopausal_status": sel("Menopausal status", menopause),
+        "bmi_group":         sel("BMI group", bmi_group),
+    }
 
     # Prepare DataFrame for prediction
     raw_df = pd.DataFrame(inputs, index=[0])
@@ -110,38 +109,37 @@ with tab1:
         st.error(f"{icon} {risk_str} (threshold = {threshold:.2f})")
     else:
         st.success(f"{icon} {risk_str} (threshold = {threshold:.2f})")
-            st.markdown("---")
-            st.markdown("### 📊 About the Data and Model Behind This Risk Factor Prediction")
-            st.markdown("""
-            The Breast Cancer Surveillance Consortium (BCSC) dataset contains millions of mammogram records, risk factors, and cancer outcomes from diverse populations in the U.S.  
-            [Learn more about BCSC](https://www.bcsc-research.org/)
-            """)
-# Figure 1: Age of participant by group
-            st.image("figures/age.jpg", width=450)
-            st.markdown("""
-            The majority of study participants fall in the 45–74 age range, with the highest counts in the 50–59 and 55–59 age groups.
-            """)
+    st.markdown("---")
+    st.markdown("### 📊 About the Data and Model Behind This Risk Factor Prediction")
+    st.markdown("""
+The Breast Cancer Surveillance Consortium (BCSC) dataset contains millions of mammogram records, risk factors, and cancer outcomes from diverse populations in the U.S.  
+[Learn more about BCSC](https://www.bcsc-research.org/)
+""")
+    # Figure 1: Age of participant by group
+    st.image("figures/age.jpg", width=450)
+    st.markdown("""
+The majority of study participants fall in the 45–74 age range, with the highest counts in the 50–59 and 55–59 age groups.
+""")
 
-# Figure 2: BMI by group
-            st.image("figures/bmi.jpg", width=450)
-            st.markdown("""
-            The largest number of participants, both with and without breast cancer history, are in the lower BMI groups (10–24.99 and 25–29.99).
-            """)
+    # Figure 2: BMI by group
+    st.image("figures/bmi.jpg", width=450)
+    st.markdown("""
+The largest number of participants, both with and without breast cancer history, are in the lower BMI groups (10–24.99 and 25–29.99).
+""")
 
-# Figure 3: first degree cancer history
-            st.image("figures/family_history.jpg", width=450)
-            st.markdown("""
-            Most participants do not have a first-degree family history of breast cancer, regardless of their own cancer history. However, among those with a history of breast cancer (orange bars), a larger proportion report a family history of the disease compared to those without cancer.
-            """)
+    # Figure 3: first degree cancer history
+    st.image("figures/family_history.jpg", width=450)
+    st.markdown("""
+Most participants do not have a first-degree family history of breast cancer, regardless of their own cancer history. However, among those with a history of breast cancer (orange bars), a larger proportion report a family history of the disease compared to those without cancer.
+""")
 
-# Figure 4: Feature Importance
-            st.image("figures/feature_importance_xgb.jpg", width=450)
-            st.markdown("""
+    # Figure 4: Feature Importance
+    st.image("figures/feature_importance_xgb.jpg", width=450)
+    st.markdown("""
 **Which Factors Matter Most?**  
-            The feature importance plot shows which risk factors contribute most to the model's predictions.
-            """)
+The feature importance plot shows which risk factors contribute most to the model's predictions.
+""")
 
-   
 # --- Tab 2: Wellness & Tracker ---
 with tab2:
     st.header("Glow and Grow")
