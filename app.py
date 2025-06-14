@@ -51,6 +51,29 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+# --- Add tab highlight CSS after header
+st.markdown("""
+<style>
+.stTabs [data-baseweb="tab"] {
+    font-size: 1.2rem;
+    color: #008080;  /* teal */
+    background: #FFD700;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.3s;
+}
+.stTabs [aria-selected="true"] {
+    font-weight: bold;
+    color: #fff !important;     /* white text */
+    border-bottom: 4px solid #ffd700 !important;  /* thick gold underline */
+    background: #232323;        /* slight dark bg */
+}
+.stTabs [role="tablist"] {
+    border-bottom: 1px solid #ffd700;
+    margin-bottom: 2em;
+}
+</style>
+""", unsafe_allow_html=True)
+
 # Load models and data
 BASE_DIR = Path(__file__).resolve().parent
 model = joblib.load(BASE_DIR / "models" / "bcsc_xgb_model.pkl")
@@ -61,36 +84,35 @@ tab1, tab2 = st.tabs(["Risk Insights", "Mind & Move"])
 
 # --- Tab 1: Breast Cancer Risk Predictor ---
 with tab1:
-    st.sidebar.header("Your information for risk prediction")
+    with st.expander("Your information for risk prediction", expanded=True):
+        def sel(label, opts):
+            return st.selectbox(label, list(opts.keys()), format_func=lambda k: opts[k])
 
-    def sel(label, opts):
-        return st.sidebar.selectbox(label, list(opts.keys()), format_func=lambda k: opts[k])
+        # Define dropdown options
+        age_groups  = {1:"18–29", 2:"30–34", 3:"35–39", 4:"40–44", 5:"45–49", 6:"50–54", 7:"55–59", 8:"60–64", 9:"65–69", 10:"70–74", 11:"75–79", 12:"80–84", 13:">85"}
+        race_eth    = {1:"White", 2:"Black", 3:"Asian or Pacific Island", 4:"Native American", 5:"Hispanic", 6:"Other"}
+        menarche    = {0:">14", 1:"12–13", 2:"<12"}
+        birth_age   = {0:"<20", 1:"20–24", 2:"25–29", 3:">30", 4:"Nulliparous"}
+        fam_hist    = {0:"No", 1:"Yes"}
+        biopsy      = {0:"No", 1:"Yes"}
+        density     = {1:"Almost fat", 2:"Scattered", 3:"Hetero-dense", 4:"Extremely"}
+        hormone_use = {0:"No", 1:"Yes"}
+        menopause   = {1:"Pre/peri", 2:"Post", 3:"Surgical"}
+        bmi_group   = {1:"10–24.9", 2:"25–29.9", 3:"30–34.9", 4:"35+"}
 
-    # Define dropdown options
-    age_groups  = {1:"18–29", 2:"30–34", 3:"35–39", 4:"40–44", 5:"45–49", 6:"50–54", 7:"55–59", 8:"60–64", 9:"65–69", 10:"70–74", 11:"75–79", 12:"80–84", 13:">85"}
-    race_eth    = {1:"White", 2:"Black", 3:"Asian or Pacific Island", 4:"Native American", 5:"Hispanic", 6:"Other"}
-    menarche    = {0:">14", 1:"12–13", 2:"<12"}
-    birth_age   = {0:"<20", 1:"20–24", 2:"25–29", 3:">30", 4:"Nulliparous"}
-    fam_hist    = {0:"No", 1:"Yes"}
-    biopsy      = {0:"No", 1:"Yes"}
-    density     = {1:"Almost fat", 2:"Scattered", 3:"Hetero-dense", 4:"Extremely"}
-    hormone_use = {0:"No", 1:"Yes"}
-    menopause   = {1:"Pre/peri", 2:"Post", 3:"Surgical"}
-    bmi_group   = {1:"10–24.9", 2:"25–29.9", 3:"30–34.9", 4:"35+"}
-
-    # Collect sidebar inputs
-    inputs = {
-        "age_group":         sel("Age group", age_groups),
-        "race_eth":          sel("Race/Ethnicity", race_eth),
-        "age_menarche":      sel("Age at 1st period", menarche),
-        "age_first_birth":   sel("Age at first birth", birth_age),
-        "family_history":    sel("Family history of cancer", fam_hist),
-        "personal_biopsy":   sel("Personal biopsy history", biopsy),
-        "density":           sel("BI-RADS density", density),
-        "hormone_use":       sel("Hormone use", hormone_use),
-        "menopausal_status": sel("Menopausal status", menopause),
-        "bmi_group":         sel("BMI group", bmi_group),
-    }
+        # Collect inputs
+        inputs = {
+            "age_group":         sel("Age group", age_groups),
+            "race_eth":          sel("Race/Ethnicity", race_eth),
+            "age_menarche":      sel("Age at 1st period", menarche),
+            "age_first_birth":   sel("Age at first birth", birth_age),
+            "family_history":    sel("Family history of cancer", fam_hist),
+            "personal_biopsy":   sel("Personal biopsy history", biopsy),
+            "density":           sel("BI-RADS density", density),
+            "hormone_use":       sel("Hormone use", hormone_use),
+            "menopausal_status": sel("Menopausal status", menopause),
+            "bmi_group":         sel("BMI group", bmi_group),
+        }
 
     # Prepare DataFrame for prediction
     raw_df = pd.DataFrame(inputs, index=[0])
