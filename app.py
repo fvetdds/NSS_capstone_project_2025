@@ -18,7 +18,7 @@ st.markdown("""
 
 /* Tabs: floating text, spaced, bold on active */
 .stTabs [data-baseweb="tab"] {
-    font-size: 1.17rem;
+    font-size: 2.17rem;
     font-weight: 600;
     color: #FFD700;
     background: transparent !important;
@@ -51,6 +51,17 @@ st.markdown("""
 }
 </style>
 """, unsafe_allow_html=True)
+st.markdown(
+    """
+    <div style='display: flex; align-items: center; background: #000; padding: 1.1em 1.5em 1.1em 1.5em; border-radius: 0 0 22px 22px; margin-bottom: 1.7em;'>
+        <span style='font-size: 2.6rem; font-weight: bold; color: #FFD700; display: flex; align-items: center;'>
+            <span style="font-size:2.2rem;margin-right:0.7em;">🎗️</span> EmpowerHER
+        </span>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
 
 # Load models and data
 BASE_DIR = Path(__file__).resolve().parent
