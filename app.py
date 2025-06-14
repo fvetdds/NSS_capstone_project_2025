@@ -8,49 +8,52 @@ st.set_page_config(page_title="Breast Cancer Risk prediction", layout="wide")
 
 # --- CSS styling ---
 st.markdown("""
-<style>
-.empowerher-navbar {
-    display: flex;
-    align-items: center;
-    background: #0B1446;
-    padding: 1.1em 2em 1.1em 2em;
-    border-radius: 0 0 18px 18px;
-    width: 100vw;
-    min-width: 100vw;
-    position: relative;
-    left: -2.7vw;
-    z-index: 100;
-}
-.empowerher-logo {
-    font-size: 2.2rem;
-    font-weight: bold;
-    color: #FFD700;
-    display: flex;
-    align-items: center;
-    margin-right: 2.7em;
-    white-space: nowrap;
-}
-.empowerher-logo span {
-    font-size: 2.1rem;
-    margin-right: 0.6em;
-}
-.empowerher-tab-btn {
-    background: transparent;
-    border: none;
-    color: #FFD700;
-    font-size: 1.26rem;
-    font-weight: 800;
-    padding: 0.2em 1.2em;
-    border-radius: 7px;
-    margin-right: 1.6em;
-    transition: color 0.18s, background 0.18s;
-}
-.empowerher-tab-btn.selected,
-.empowerher-tab-btn:active {
-    color: #fff700;
-    background: #19225c;
-}
-</style>
+    <style>
+    .navbar-container {
+        background: #0B1446;
+        border-radius: 0 0 18px 18px;
+        margin-bottom: 1.2em;
+        width: 100vw;
+        min-width: 100vw;
+        padding: 0.7em 0 0.7em 0;
+        position: relative;
+        left: -2.7vw;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+    }
+    .navbar-logo {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #FFD700;
+        display: flex;
+        align-items: center;
+        white-space: nowrap;
+        margin-left: 2.4em;
+        margin-right: 2.5em;
+    }
+    .navbar-logo span {
+        font-size: 2.2rem;
+        margin-right: 0.6em;
+    }
+    .nav-btn {
+        background: transparent;
+        border: none;
+        color: #FFD700;
+        font-size: 1.35rem;
+        font-weight: 800;
+        padding: 0.38em 2.2em 0.38em 2.2em;
+        border-radius: 9px;
+        margin-right: 1.7em;
+        transition: color 0.22s, background 0.19s;
+        outline: none;
+        cursor: pointer;
+    }
+    .nav-btn.selected, .nav-btn:active {
+        color: #fff700 !important;
+        background: #19225c !important;
+    }
+    </style>
 """, unsafe_allow_html=True)
 
 tabs = ["About", "Risk Insights", "Mind & Move"]
