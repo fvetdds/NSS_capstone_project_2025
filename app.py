@@ -141,12 +141,9 @@ st.markdown("""
 The feature importance plot shows which risk factors contribute most to the model's predictions.
 """)
 
-# --- Tab 2: 5-Year Survival Predictor ---
+   
+# --- Tab 2: Wellness & Tracker ---
 with tab2:
-    st.header("5-Year Survival Probability by Gene Mutation Markers")
-    
-# --- Tab 3: Wellness & Tracker ---
-with tab3:
     st.header("Glow and Grow")
     st.write("Here are some tips and a simple tracker to help you with meditation, diet, and exercise.")
 
