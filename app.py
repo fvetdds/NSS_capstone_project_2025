@@ -59,7 +59,7 @@ model = joblib.load(BASE_DIR / "models" / "bcsc_xgb_model.pkl")
 threshold = joblib.load(BASE_DIR / "models" / "threshold.pkl")
 
 # Create tabs
-tab1, tab2, tab3 = st.tabs(["Risk Insights", "Thrive Prediction", "Mind & Move"])
+tab1, tab2, tab3 = st.tabs(["Risk Insights", "Mind & Move"])
 
 # --- Tab 1: Breast Cancer Risk Predictor ---
 with tab1:
