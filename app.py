@@ -6,7 +6,7 @@ from pathlib import Path
 
 st.set_page_config(page_title="Breast Cancer Risk prediction", layout="wide")
 
-# ------------- CSS & Custom Nav Bar --------------
+# --- CSS styling ---
 st.markdown("""
 <style>
 .empowerher-navbar {
@@ -34,72 +34,73 @@ st.markdown("""
     font-size: 2.1rem;
     margin-right: 0.6em;
 }
-.empowerher-tabs {
-    display: flex;
-    gap: 2.6em;
-    flex-grow: 1;
-}
-.empowerher-tab {
-    font-size: 1.26rem;
-    font-weight: 800;
-    color: #FFD700;
-    text-decoration: none !important;
+.empowerher-tab-btn {
     background: transparent;
     border: none;
-    cursor: pointer;
-    transition: color 0.18s, background 0.18s;
-    padding: 0.2em 0.5em;
+    color: #FFD700;
+    font-size: 1.26rem;
+    font-weight: 800;
+    padding: 0.2em 1.2em;
     border-radius: 7px;
+    margin-right: 1.6em;
+    transition: color 0.18s, background 0.18s;
 }
-.empowerher-tab.active,
-.empowerher-tab:hover {
+.empowerher-tab-btn.selected,
+.empowerher-tab-btn:active {
     color: #fff700;
     background: #19225c;
 }
 </style>
 """, unsafe_allow_html=True)
 
-# ----- TAB STATE -----
 tabs = ["About", "Risk Insights", "Mind & Move"]
 if "active_tab" not in st.session_state:
-    st.session_state["active_tab"] = tabs[0]
+    st.session_state.active_tab = tabs[0]
 
-# ----- Custom Nav Bar -----
-def navbar():
-    nav_html = """
-    <div class="empowerher-navbar">
-        <div class="empowerher-logo">
-            <span>🎗️</span> EmpowerHER
-        </div>
-        <div class="empowerher-tabs">
-    """
-    for t in tabs:
-        is_active = "active" if st.session_state["active_tab"] == t else ""
-        nav_html += f"""
-        <form style="display:inline;" method="post">
-            <button class="empowerher-tab {is_active}" name="tab" value="{t}" type="submit">{t}</button>
-        </form>
-        """
-    nav_html += "</div></div>"
-    st.markdown(nav_html, unsafe_allow_html=True)
+# --- Custom Navbar with Streamlit buttons ---
+def custom_navbar():
+    col_logo, col_about, col_risk, col_mind, col_spacer = st.columns([2, 1.5, 2, 2, 12])
+    with col_logo:
+        st.markdown(
+            '<div class="empowerher-logo"><span>🎗️</span> EmpowerHER</div>',
+            unsafe_allow_html=True
+        )
+    # Tab buttons
+    for i, t in enumerate(tabs):
+        col = [col_about, col_risk, col_mind][i]
+        btn_class = "empowerher-tab-btn"
+        if st.session_state.active_tab == t:
+            btn_class += " selected"
+        # The key must be unique per button
+        if col.button(
+            t,
+            key=f"tabbtn_{t}",
+            help=f"Go to {t}",
+        ):
+            st.session_state.active_tab = t
+        # Manual styling for selected tab
+        col.markdown(
+            f"""<style>
+            [data-testid="stButton"] button#{'tabbtn_'+t} {{background: transparent; color: #FFD700;}}
+            [data-testid="stButton"]:has(button.selected) button.selected {{
+                color: #fff700 !important;
+                background: #19225c !important;
+            }}
+            </style>""",
+            unsafe_allow_html=True
+        )
 
-# Detect which tab was pressed
-if st.session_state.get("tab"):
-    st.session_state["active_tab"] = st.session_state["tab"]
-    st.session_state["tab"] = None
+custom_navbar()
+st.markdown("---")
 
-navbar()
-
-# ----- Load models and data -----
+# --- Load models and data
 BASE_DIR = Path(__file__).resolve().parent
 model = joblib.load(BASE_DIR / "models" / "bcsc_xgb_model.pkl")
 threshold = joblib.load(BASE_DIR / "models" / "threshold.pkl")
 
-# ----- Show the active tab's content -----
-tab = st.session_state["active_tab"]
+tab = st.session_state.active_tab
 
 if tab == "About":
-    st.markdown("---")
     st.markdown("### 📊 About the Data and Model Behind this Risk Factor Prediction")
     st.markdown("""
 XGBoost machine learning model is one of the best for tabular data and can handle complex relationship nd interactions between features. We build a model that prioritized finding as many true cancer cases as possible--it catches almost 9 out of 10 cases in test dataset. This trained XGBoost model predicits the likelihood that someone has or will have breast cancer based on their health and demographic data. The train and test dataset is the Breast Cancer Surveillance Consortium (BCSC) dataset contains millions of mammogram records, risk factors, and cancer outcomes from diverse populations in the U.S.  [Learn more about BCSC](https://www.bcsc-research.org/).
