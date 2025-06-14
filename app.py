@@ -138,25 +138,25 @@ The Breast Cancer Surveillance Consortium (BCSC) dataset contains millions of ma
 [Learn more about BCSC](https://www.bcsc-research.org/)
 """)
     # Figure 1: Age of participant by group
-    st.image("figures/age.jpg", width=450)
+    st.image("figures/age.png", width=450)
     st.markdown("""
 The majority of study participants fall in the 45–74 age range, with the highest counts in the 50–59 and 55–59 age groups.
 """)
 
     # Figure 2: BMI by group
-    st.image("figures/bmi.jpg", width=450)
+    st.image("figures/bmi.png", width=450)
     st.markdown("""
 The largest number of participants, both with and without breast cancer history, are in the lower BMI groups (10–24.99 and 25–29.99).
 """)
 
     # Figure 3: first degree cancer history
-    st.image("figures/family_history.jpg", width=450)
+    st.image("figures/family_history.png", width=450)
     st.markdown("""
 Most participants do not have a first-degree family history of breast cancer, regardless of their own cancer history. However, among those with a history of breast cancer (orange bars), a larger proportion report a family history of the disease compared to those without cancer.
 """)
 
     # Figure 4: Feature Importance
-    st.image("figures/feature_importance_xgb.jpg", width=450)
+    st.image("figures/feature_importance_xgb.png", width=450)
     st.markdown("""
 **Which Factors Matter Most?**  
 The feature importance plot shows which risk factors contribute most to the model's predictions.
