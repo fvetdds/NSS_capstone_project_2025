@@ -231,10 +231,8 @@ with tab2:
             "name": "Alive Hospice Cancer Support",
             "phone": "(615) 327-1085",
             "website": "https://alivehospice.org"
-        },
-        {"name": "Susan G. Komen Nashville", "phone": "(615) 673-6633", "website": "https://komen.org/nashville"},
-        {"name": "Vanderbilt Breast Cancer Support Group", "phone": "(615) 322-3900", "website": "https://www.vicc.org/support-groups"},
-        {"name": "Alive Hospice Cancer Support", "phone": "(615) 327-1085", "website": "https://alivehospice.org"}
+        }
+        
     ]
     for grp in support_groups:
         st.markdown(f"- **{grp['name']}**: {grp['phone']} | [Website]({grp['website']})")
