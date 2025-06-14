@@ -8,92 +8,69 @@ from pathlib import Path
 st.set_page_config(page_title="Breast Cancer Risk prediction", layout="wide")
 st.markdown("""
 <style>
+/* NAVBAR */
 .empowerher-navbar {
     display: flex;
     align-items: center;
-    background: #000;
-    padding: 1.1em 1.5em 1.1em 1.5em;
+    background: #0B1446; /* dark blue */
+    padding: 1.1em 2em 1.1em 2em;
     border-radius: 0 0 18px 18px;
-    margin-bottom: 0.6em;
     width: 100vw;
     min-width: 100vw;
     position: relative;
-    left: -2.7vw; /* Adjust for Streamlit default container padding */
+    left: -2.7vw; /* adjust for Streamlit container */
+    z-index: 100;
 }
+/* Logo/Branding */
 .empowerher-logo {
-    font-size: 3.3rem;
+    font-size: 2.2rem;
     font-weight: bold;
     color: #FFD700;
     display: flex;
     align-items: center;
-    margin-right: 3.2em;
+    margin-right: 2.7em;
     white-space: nowrap;
 }
 .empowerher-logo span {
-    font-size: 2rem;
+    font-size: 2.1rem;
     margin-right: 0.6em;
 }
-
-/* Adjust tab bar position to be inline with branding */
-.stTabs [role="tablist"] {
-    border-bottom: none !important;
-    background: transparent !important;
-    align-items: center;
-    height: auto;
-    margin: 0;
-    padding: 0;
-    display: flex !important;
+/* Nav tabs (links) */
+.empowerher-tabs {
+    display: flex;
+    gap: 2.6em;
+    flex-grow: 1;
 }
-
-/* Tab styling: match the black bar, space out, remove underline */
-.stTabs [data-baseweb="tab"] {
-    font-size: 2.4rem !important;
-    font-weight: 800 !important;
+.empowerher-tab {
+    font-size: 1.26rem;
+    font-weight: 800;
     color: #FFD700;
-    background: transparent !important;
-    margin-right: 2.4em !important;
-    border: none !important;
-    box-shadow: none !important;
-    padding: 0.2em 1.1em 0.2em 1.1em;
-    border-radius: 12px 12px 0 0 !important;
+    text-decoration: none !important;
+    background: transparent;
+    border: none;
+    cursor: pointer;
     transition: color 0.18s, background 0.18s;
-    position: relative;
-    top: 2px;
+    padding: 0.2em 0.5em;
+    border-radius: 7px;
 }
-
-/* Brighter yellow when tab is active */
-.stTabs [aria-selected="true"] {
-    color: #FFEB3B !important;           /* brighter yellow for active */
-    background: #181818 !important;      /* subtle dark bg for active */
-    font-weight: 900 !important;
-    border-bottom: none !important;
-    box-shadow: 0 -4px 18px 0 #FFD70022;
-    border-radius: 12px 12px 0 0 !important;
-}
-
-/* Inactive tab: gold */
-.stTabs [data-baseweb="tab"]:not([aria-selected="true"]) {
-    color: #FFD700 !important;
-    background: transparent !important;
-    font-weight: 700 !important;
-}
-
-/* Optional: subtle hover */
-.stTabs [data-baseweb="tab"]:hover {
-    color: #fff700 !important;
-    background: #222 !important;
+.empowerher-tab.active,
+.empowerher-tab:hover {
+    color: #fff700;
+    background: #19225c;
 }
 </style>
 
-<!-- Custom black strip with logo/branding -->
 <div class="empowerher-navbar">
     <div class="empowerher-logo">
         <span>🎗️</span> EmpowerHER
     </div>
+    <div class="empowerher-tabs">
+        <a href="#about" class="empowerher-tab active">About</a>
+        <a href="#risk" class="empowerher-tab">Risk Insights</a>
+        <a href="#wellness" class="empowerher-tab">Mind & Move</a>
+    </div>
 </div>
 """, unsafe_allow_html=True)
-
-
 # Load models and data
 BASE_DIR = Path(__file__).resolve().parent
 model = joblib.load(BASE_DIR / "models" / "bcsc_xgb_model.pkl")
@@ -108,7 +85,7 @@ with tab1:
 XGBoost machine learning model is one of the best for tabular data and can handle complex relationship nd interactions between features. We build a model that prioritized finding as many true cancer cases as possible--it catches almost 9 out of 10 cases in test dataset. This trained XGBoost model predicits the likelihood that someone has or will have breast cancer based on their health and demographic data. The train and test dataset is the Breast Cancer Surveillance Consortium (BCSC) dataset contains millions of mammogram records, risk factors, and cancer outcomes from diverse populations in the U.S.  [Learn more about BCSC](https://www.bcsc-research.org/).
 After each person entered demographic and medical information, the model gives a probability score to predict what the chance this person will have cancer.
 How Accurate is the Model?
-- Recall for Cancer is 89%. it finds 89% of those who actually do have cancer in the test dataset, while recall for No cancer is 77%. The model has ROC AUC:0.91, threshold of 0.53 and Matthews Correlation Coefficient of 0.5
+- Recall for Cancer is 89%. it finds 89% of those who actually do have cancer in the test dataset, while recall for No cancer is 77%. The model has ROC AUC:0.91, threshold of 0.53 and Matthews Correlation Coefficient of 0.5.
 """)
     # Figure 1: Age of participant by group
     st.image("figures/age_group_label_by_cancer_label.png", width=900)
