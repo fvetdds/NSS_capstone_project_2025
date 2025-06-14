@@ -81,17 +81,17 @@ with tab1:
 
     # Collect sidebar inputs
             inputs = {
-                "age_group":         sel("Age group", age_groups),
-                "race_eth":          sel("Race/Ethnicity", race_eth),
-                "age_menarche":      sel("Age at 1st period", menarche),
-                "age_first_birth":   sel("Age at first birth", birth_age),
-                "family_history":    sel("Family history of cancer", fam_hist),
-                "personal_biopsy":   sel("Personal biopsy history", biopsy),
-                "density":           sel("BI-RADS density", density),
-                "hormone_use":       sel("Hormone use", hormone_use),
-                "menopausal_status": sel("Menopausal status", menopause),
-                "bmi_group":         sel("BMI group", bmi_group),
-                }
+            "age_group":         sel("Age group", age_groups),
+            "race_eth":          sel("Race/Ethnicity", race_eth),
+            "age_menarche":      sel("Age at 1st period", menarche),
+            "age_first_birth":   sel("Age at first birth", birth_age),
+            "family_history":    sel("Family history of cancer", fam_hist),
+            "personal_biopsy":   sel("Personal biopsy history", biopsy),
+            "density":           sel("BI-RADS density", density),
+            "hormone_use":       sel("Hormone use", hormone_use),
+            "menopausal_status": sel("Menopausal status", menopause),
+            "bmi_group":         sel("BMI group", bmi_group),
+            }
 
     # Prepare DataFrame for prediction
     raw_df = pd.DataFrame(inputs, index=[0])
