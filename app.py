@@ -6,7 +6,7 @@ from pathlib import Path
 
 st.set_page_config(page_title="Breast Cancer Risk prediction", layout="wide")
 
-# --- CSS styling ---
+# ---- Custom Navbar CSS ----
 st.markdown("""
     <style>
     .navbar-container {
@@ -56,53 +56,54 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+# ---- Tabs and State ----
 tabs = ["About", "Risk Insights", "Mind & Move"]
 if "active_tab" not in st.session_state:
     st.session_state.active_tab = tabs[0]
 
-# --- Custom Navbar with Streamlit buttons ---
-def custom_navbar():
-    col_logo, col_about, col_risk, col_mind, col_spacer = st.columns([2, 1.5, 2, 2, 12])
-    with col_logo:
-        st.markdown(
-            '<div class="empowerher-logo"><span>🎗️</span> EmpowerHER</div>',
-            unsafe_allow_html=True
-        )
-    # Tab buttons
-    for i, t in enumerate(tabs):
-        col = [col_about, col_risk, col_mind][i]
-        btn_class = "empowerher-tab-btn"
-        if st.session_state.active_tab == t:
-            btn_class += " selected"
-        # The key must be unique per button
-        if col.button(
+# ---- Draw Custom Navbar ----
+cols = st.columns([2, 1.3, 1.7, 1.7, 8])
+with cols[0]:
+    st.markdown('<div class="navbar-logo"><span>🎗️</span> EmpowerHER</div>', unsafe_allow_html=True)
+for i, t in enumerate(tabs):
+    with cols[i+1]:
+        is_selected = st.session_state.active_tab == t
+        btn_class = "nav-btn selected" if is_selected else "nav-btn"
+        btn_clicked = st.button(
             t,
-            key=f"tabbtn_{t}",
+            key=f"nav_{t}",
             help=f"Go to {t}",
-        ):
-            st.session_state.active_tab = t
-        # Manual styling for selected tab
-        col.markdown(
-            f"""<style>
-            [data-testid="stButton"] button#{'tabbtn_'+t} {{background: transparent; color: #FFD700;}}
-            [data-testid="stButton"]:has(button.selected) button.selected {{
-                color: #fff700 !important;
-                background: #19225c !important;
-            }}
-            </style>""",
-            unsafe_allow_html=True
+            use_container_width=True
         )
+        # CSS for selected tab
+        st.markdown(
+            f"""<style>
+            [data-testid="stButton"] button#nav_{t} {{
+                background: transparent !important;
+                color: {'#fff700' if is_selected else '#FFD700'} !important;
+                font-size: 1.35rem !important;
+                font-weight: 800 !important;
+                border-radius: 9px !important;
+                padding: 0.38em 2.2em 0.38em 2.2em !important;
+                margin-right: 1.7em !important;
+                background: {'#19225c' if is_selected else 'transparent'} !important;
+            }}
+            </style>
+            """, unsafe_allow_html=True
+        )
+        if btn_clicked:
+            st.session_state.active_tab = t
 
-custom_navbar()
 st.markdown("---")
 
-# --- Load models and data
+# ---- Load models and data (only once) ----
 BASE_DIR = Path(__file__).resolve().parent
 model = joblib.load(BASE_DIR / "models" / "bcsc_xgb_model.pkl")
 threshold = joblib.load(BASE_DIR / "models" / "threshold.pkl")
 
 tab = st.session_state.active_tab
 
+# ---- Render Content for Each Tab ----
 if tab == "About":
     st.markdown("### 📊 About the Data and Model Behind this Risk Factor Prediction")
     st.markdown("""
