@@ -100,10 +100,43 @@ model = joblib.load(BASE_DIR / "models" / "bcsc_xgb_model.pkl")
 threshold = joblib.load(BASE_DIR / "models" / "threshold.pkl")
 
 # Create tabs
-tab1, tab2 = st.tabs(["Risk Insights", "Mind & Move"])
-
-# --- Tab 1: Breast Cancer Risk Predictor ---
+tab1, tab2, tab3 = st.tabs(["About", "Risk Insights", "Mind & Move"])
 with tab1:
+    st.markdown("---")
+    st.markdown("### 📊 About the Data and Model Behind this Risk Factor Prediction")
+    st.markdown("""
+XGBoost machine learning model is one of the best for tabular data and can handle complex relationship nd interactions between features. We build a model that prioritized finding as many true cancer cases as possible--it catches almost 9 out of 10 cases in test dataset. This trained XGBoost model predicits the likelihood that someone has or will have breast cancer based on their health and demographic data. The train and test dataset is the Breast Cancer Surveillance Consortium (BCSC) dataset contains millions of mammogram records, risk factors, and cancer outcomes from diverse populations in the U.S.  [Learn more about BCSC](https://www.bcsc-research.org/).
+After each person entered demographic and medical information, the model gives a probability score to predict what the chance this person will have cancer.
+How Accurate is the Model?
+- Recall for Cancer is 89%. it finds 89% of those who actually do have cancer in the test dataset, while recall for No cancer is 77%. The model has ROC AUC:0.91, threshold of 0.53 and Matthews Correlation Coefficient of 0.5
+""")
+    # Figure 1: Age of participant by group
+    st.image("figures/age_group_label_by_cancer_label.png", width=900)
+    st.markdown("""
+The majority of study participants fall in the 45–74 age range, with the highest counts in the 50–59 and 55–59 age groups.
+""")
+
+    # Figure 2: BMI by group
+    st.image("figures/bmi_group_label_by_cancer_label.png", width=900)
+    st.markdown("""
+The largest number of participants, both with and without breast cancer history, are in the lower BMI groups (10–24.99 and 25–29.99).
+""")
+
+    # Figure 3: first degree cancer history
+    st.image("figures/first_degree_hx_label_by_cancer_label.png", width=900)
+    st.markdown("""
+Most participants do not have a first-degree family history of breast cancer, regardless of their own cancer history. However, among those with a history of breast cancer (orange bars), a larger proportion report a family history of the disease compared to those without cancer.
+""")
+
+    # Figure 4: Feature Importance
+    st.image("figures/feature_importance_xgb.png", width=900)
+    st.markdown("""
+**Which Factors Matter Most?**  
+The feature importance plot shows which risk factors contribute most to the model's predictions.
+""")
+
+# --- Tab 2: Breast Cancer Risk Predictor ---
+with tab2:
     with st.expander("Your information for risk prediction", expanded=True):
         def sel(label, opts):
             return st.selectbox(label, list(opts.keys()), format_func=lambda k: opts[k])
@@ -151,39 +184,10 @@ with tab1:
         st.error(f"{icon} {risk_str} (threshold = {threshold:.2f})")
     else:
         st.success(f"{icon} {risk_str} (threshold = {threshold:.2f})")
-    st.markdown("---")
-    st.markdown("### 📊 About the Data and Model Behind This Risk Factor Prediction")
-    st.markdown("""
-The Breast Cancer Surveillance Consortium (BCSC) dataset contains millions of mammogram records, risk factors, and cancer outcomes from diverse populations in the U.S.  
-[Learn more about BCSC](https://www.bcsc-research.org/)
-""")
-    # Figure 1: Age of participant by group
-    st.image("figures/age_group_label_by_cancer_label.png", width=900)
-    st.markdown("""
-The majority of study participants fall in the 45–74 age range, with the highest counts in the 50–59 and 55–59 age groups.
-""")
 
-    # Figure 2: BMI by group
-    st.image("figures/bmi_group_label_by_cancer_label.png", width=900)
-    st.markdown("""
-The largest number of participants, both with and without breast cancer history, are in the lower BMI groups (10–24.99 and 25–29.99).
-""")
 
-    # Figure 3: first degree cancer history
-    st.image("figures/first_degree_hx_label_by_cancer_label.png", width=900)
-    st.markdown("""
-Most participants do not have a first-degree family history of breast cancer, regardless of their own cancer history. However, among those with a history of breast cancer (orange bars), a larger proportion report a family history of the disease compared to those without cancer.
-""")
-
-    # Figure 4: Feature Importance
-    st.image("figures/feature_importance_xgb.png", width=900)
-    st.markdown("""
-**Which Factors Matter Most?**  
-The feature importance plot shows which risk factors contribute most to the model's predictions.
-""")
-
-# --- Tab 2: Wellness & Tracker ---
-with tab2:
+# --- Tab 3: Wellness & Tracker ---
+with tab3:
     st.header("Glow and Grow")
     st.write("Here are some tips and a simple tracker to help you with meditation, diet, and exercise.")
 
