@@ -50,7 +50,7 @@ When tested on real data, our model correctly identified 89% of people who actua
 If the model predicts you DO have a history of breast cancer, it is correct 46% of the time. Overall accuracy (ROC AUC) is 0.91, which means the model does a very good job distinguishing between the two groups. We use a risk threshold of 0.53 to decide if the risk is “yes” or “no,” which helps balance accuracy for both groups. The Matthews Correlation Coefficient is 0.5, showing the model’s predictions are much better than random chance.
 """)
     st.markdown("### Precision-Recall Chart")
-    t.image("P-R chart.png", width=900)
+    st.image("P-R chart.png", width=900)
     st.markdown("### BCSC data detail")
     st.image("figures/age_group_label_by_cancer_label.png", width=900)
     st.markdown("""The majority of study participants fall in the 45–74 age range, with the highest counts in the 50–59 and 55–59 age groups.""")
