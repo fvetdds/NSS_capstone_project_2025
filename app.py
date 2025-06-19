@@ -42,12 +42,12 @@ threshold = joblib.load(BASE_DIR / "models" / "threshold.pkl")
 with tab1:
     st.markdown("### 📊 About the Data and Model Behind this Risk Factor Prediction")
     st.markdown("""
-XGBoost machine learning model is one of the best machine learning model for tabular data and can handle complex relationship nd interactions between features. I builded a model that prioritized finding as many true cancer cases as possible. It gives an overall accuracy of 89%. almost 9 out of 10 cases in test dataset. This trained XGBoost model predicits the likelihood that someone has or will have breast cancer based on their health and demographic data. The train and test dataset is the Breast Cancer Surveillance Consortium (BCSC) dataset contains millions of mammogram records, risk factors, and cancer outcomes from diverse populations in the U.S.  [Learn more about BCSC](https://www.bcsc-research.org/).
+XGBoost machine learning model is one of the best model for tabular data and can handle complex relationship and interactions between features. I build a model that prioritized finding as many true cancer cases as possible. It gives an overall accuracy of 89%. This trained XGBoost model predicts the likelihood that someone has or will have breast cancer based on their health and demographic data. The train and test dataset is the Breast Cancer Surveillance Consortium (BCSC) dataset contains millions of mammogram records, risk factors, and cancer outcomes from diverse populations in the U.S.  [Learn more about BCSC](https://www.bcsc-research.org/).
 After each person entered demographic and medical information, the model gives a probability score to predict what the chance this person will have cancer.
 
 How Accurate is the Model?
-When tested on real data, our model correctly identified 89% of people who actually had a history of breast cancer. For people without a history of breast cancer, the model correctly identified 77% of them. If the model predicts you do NOT have a history of breast cancer, it is correct 89% of the time.
-If the model predicts you DO have a history of breast cancer, it is correct 46% of the time. Overall accuracy (ROC AUC) is 0.91, which means the model does a very good job distinguishing between the two groups. We use a risk threshold of 0.53 to decide if the risk is “yes” or “no,” which helps balance accuracy for both groups. The Matthews Correlation Coefficient is 0.5, showing the model’s predictions are much better than random chance.
+When tested on real data, our model correctly identified 89% of people who actually had a history of breast cancer. For people without a history of breast cancer, the model correctly identified 92% of them. If the model predicts you do NOT have a history of breast cancer, it is correct 92% of the time.
+If the model predicts you DO have a history of breast cancer, it is correct 52% of the time. Overall accuracy (ROC AUC) is 0.91, which means the model does a very good job distinguishing between the two groups. We use a risk threshold of 0.82 to decide if the risk is “yes” or “no,” which helps balance accuracy for both groups. The Matthews Correlation Coefficient is 0.5573, showing the model’s predictions are much better than random chance.
 """)
     st.markdown("### BCSC data detail")
     st.image("figures/age_group_label_by_cancer_label.png", width=900)
@@ -101,9 +101,6 @@ with tab2:
         st.success(f"{icon} {risk_str} (threshold = {threshold:.2f})")
 
 # --- TAB 3: MIND & MOVE ---
-from streamlit_gauge import st_gauge
-from streamlit_gauge import st_gauge
-
 # Set daily goals
 MEDITATE_GOAL = 10     # minutes
 EXERCISE_GOAL = 30     # minutes
@@ -111,43 +108,43 @@ WATER_GOAL = 8         # glasses
 
 with tab3:
     st.header("Glow and Grow")
-    st.write("Here are some tips and a simple tracker to help you with meditation, diet, and exercise.")
-    st.subheader("Daily Rituals")
-    # ... your tips code ...
-
+    st.write("Every healthy choice you make today is a step toward a brighter, happier you. You’ve got this!")
+        
     st.subheader("Shape The Future U Tracker")
     col1, col2, col3 = st.columns(3)
     with col1:
         meditate_mins = st.number_input("Meditation minutes", min_value=0, max_value=60, value=0)
-        st_gauge(
-            value=meditate_mins,
-            min_value=0,
-            max_value=MEDITATE_GOAL,
-            label="Meditation Progress",
-            color="green" if meditate_mins >= MEDITATE_GOAL else "orange",
+        prog = meditate_mins / MEDITATE_GOAL if MEDITATE_GOAL else 0
+        st.progress(prog)
+        
+        st.metric(
+            label="Meditation",
+            value=f"{meditate_mins} min",
+            delta=f"{max(0, MEDITATE_GOAL - meditate_mins)} to goal"
         )
-        st.caption(f"{meditate_mins}/{MEDITATE_GOAL} min")
+
     with col2:
-        exercise_mins = st.number_input("Exercise minutes", min_value=0, max_value=180, value=0)
-        st_gauge(
-            value=exercise_mins,
-            min_value=0,
-            max_value=EXERCISE_GOAL,
-            label="Exercise Progress",
-            color="green" if exercise_mins >= EXERCISE_GOAL else "orange",
+        exercise_mins = st.number_input("Exercise minutes", min_value=0, max_value=120, value=0)
+        prog = exercise_mins / EXERCISE_GOAL if EXERCISE_GOAL else 0
+        st.progress(prog)
+        st.metric(
+            label="Exercise",
+            value=f"{exercise_mins} min",
+            delta=f"{max(0, EXERCISE_GOAL - exercise_mins)} to goal"
         )
-        st.caption(f"{exercise_mins}/{EXERCISE_GOAL} min")
+
     with col3:
         water_glasses = st.number_input("Glasses of water", min_value=0, max_value=20, value=0)
-        st_gauge(
-            value=water_glasses,
-            min_value=0,
-            max_value=WATER_GOAL,
-            label="Hydration Progress",
-            color="blue" if water_glasses >= WATER_GOAL else "orange",
+        prog = water_glasses / WATER_GOAL if WATER_GOAL else 0
+        st.progress(prog)
+        st.metric(
+            label="Hydration",
+            value=f"{water_glasses} glasses",
+            delta=f"{max(0, WATER_GOAL - water_glasses)} to goal"
         )
-        st.caption(f"{water_glasses}/{WATER_GOAL} glasses")
-    diet_log = st.text_area("Diet log (meals/snacks)")
+
+    st.subheader("Diet Log")
+    diet_log = st.text_area("Meals / snacks")
     if st.button("Save Entry"):
         entry = {
             "date": pd.Timestamp.now().strftime("%Y-%m-%d"),
