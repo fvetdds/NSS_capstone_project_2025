@@ -7,7 +7,7 @@ from pathlib import Path
 
 st.set_page_config(page_title="Breast Cancer Risk prediction", layout="wide")
 
-# --- CUSTOM HEADER ---
+#HEADER 
 st.markdown("""
     <style>
     .navbar-logo {
@@ -30,15 +30,27 @@ st.markdown("""
 """, unsafe_allow_html=True)
 st.markdown("---")
 
-# --- TABS ---
+#tab definition
 tab1, tab2, tab3 = st.tabs(["About", "Risk Insights", "Mind & Move"])
 
-# --- LOAD MODEL (only needed for Risk Insights tab) ---
+scale_pos_weight   =  (1.0)  # these values must match what you used when training
+pos_penalty_factor = 10.0    # e.g. as in train_model.py
+weight_neg         = 1.0
+weight_pos         = scale_pos_weight * pos_penalty_factor
+
+def weighted_logloss(y_true: np.ndarray, y_pred: np.ndarray):
+    # exactly the same code you used when training
+    p    = 1.0 / (1.0 + np.exp(-y_pred))
+    w    = np.where(y_true == 1, weight_pos, weight_neg)
+    grad = w * (p - y_true)
+    hess = w * p * (1.0 - p)
+    return grad, hess
+# load model for risk prediction
 BASE_DIR = Path(__file__).resolve().parent
 model = joblib.load(BASE_DIR / "models" / "bcsc_xgb_model.pkl")
 threshold = joblib.load(BASE_DIR / "models" / "threshold.pkl")
 
-# --- TAB 1: ABOUT ---
+#TAB 1: about the model and dataset
 with tab1:
     st.markdown("### 📊 About the Data and Model Behind this Risk Factor Prediction")
     st.markdown("""
@@ -60,7 +72,7 @@ If the model predicts you DO have a history of breast cancer, it is correct 52% 
     st.markdown("""**Which Factors Matter Most?**  
     The feature importance plot shows which risk factors contribute most to the model's predictions.""")
 
-# --- TAB 2: RISK INSIGHTS ---
+#TAB 2: RISK INSIGHTS 
 with tab2:
     with st.expander("Your information for risk prediction", expanded=True):
         def sel(label, opts):
@@ -100,8 +112,8 @@ with tab2:
     else:
         st.success(f"{icon} {risk_str} (threshold = {threshold:.2f})")
 
-# --- TAB 3: MIND & MOVE ---
-# Set daily goals
+# TAB 3: MIND & MOVE
+# Set daily goals for healthy life
 MEDITATE_GOAL = 10     # minutes
 EXERCISE_GOAL = 30     # minutes
 WATER_GOAL = 8         # glasses
