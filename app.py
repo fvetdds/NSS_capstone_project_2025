@@ -213,12 +213,12 @@ with tab3:
     st.markdown("## 🤝 Local Support Groups")
     support = [
       {"Name": "American Cancer Society Middle Tennessee",            "Phone": "(800) 227-2345 (toll free)", "Website": "https://www.cancer.org/about-us/local/tennessee.html"},
-     {"Name": "Tennessee Oncology Support Services",            "Phone": "(866) 717-2760", "Website": "https://www.tnonc.co"},
+     {"Name": "Tennessee Oncology Support Services",            "Phone": "(866) 717-2760", "Website": "https://www.tnonc.com"},
     {"Name": "Susan G. Komen Nashville",            "Phone": "(615) 673-6633", "Website": "https://komen.org/nashville"},
     {"Name": "Vanderbilt Breast Cancer Support Group","Phone": "(615) 322-3900", "Website": "https://www.vicc.org/support-groups"},
     {"Name": "Alive Hospice Cancer Support",        "Phone": "(615) 327-1085", "Website": "https://alivehospice.org"},
     {"Name": "YMCA of Middle Tennessee – LIVESTRONG® at the Y", "Website": "https://www.ymcamidtn.org/programs/health-and-fitness/support-groups/after-breast-cancer"}
 ]
-support_df = pd.DataFrame(support)
-support_df["Website"] = support_df["Website"].apply(lambda url: f"[Visit]({url})")
-st.table(support_df)
+    support_df = pd.DataFrame(support)
+    support_df["Website"] = support_df["Website"].apply(lambda url: f"[Visit]({url})")
+    st.table(support_df)
