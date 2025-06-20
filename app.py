@@ -132,7 +132,9 @@ with tab3:
     st.subheader("Additional Resources")   
     st.markdown("**YouTube Videos:**")    
     videos = {        
-        "Mindfulness Meditation for Cancer Support": "https://www.youtube.com/watch?v=1ZYbU82GVz4&t=31s",        "Gentle Move for All": "https://www.youtube.com/watch?v=Ev6yE55kYGw&t=169s",        "Healthy Eating During Cancer Treatment": "https://www.youtube.com/shorts/kkk8UPd7l38"    }   
+        "Mindfulness Meditation for Cancer Support": "https://www.youtube.com/watch?v=1ZYbU82GVz4&t=31s",        
+        "Gentle Move for All": "https://www.youtube.com/watch?v=Ev6yE55kYGw&t=169s",        
+        "Healthy Eating During Cancer Treatment": "https://www.youtube.com/shorts/kkk8UPd7l38"    }   
     for title, url in videos.items():        
         st.markdown(f"- [{title}]({url})")    
         st.markdown("**Local Support Groups in Nashville, TN:**")    
