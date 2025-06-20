@@ -135,12 +135,9 @@ with tab3:
         "Mindfulness Meditation for Cancer Support": "https://www.youtube.com/watch?v=1ZYbU82GVz4&t=31s",        
         "Gentle Move for All": "https://www.youtube.com/watch?v=Ev6yE55kYGw&t=169s",        
         "Healthy Eating During Cancer Treatment": "https://www.youtube.com/shorts/kkk8UPd7l38"    }   
-    for title, url in videos.items():        
-        st.markdown(f"- [{title}]({url})")    
-        support_groups = [       
-            {"name": "Susan G. Komen Nashville", "phone": "(615) 673-6633","website": "https://komen.org/nashville"},        
-            { "name": "Vanderbilt Breast Cancer Support Group", "phone": "(615) 322-3900","website": "https://www.vicc.org/support-groups"        },        
-            { "name": "Alive Hospice Cancer Support","phone": "(615) 327-1085","website": "https://alivehospice.org"}]    
-    for grp in support_groups:        
-        st.markdown(f"- **{grp['name']}**: {grp['phone']} | [Website]({grp['website']})")
-
+    st.markdown("**Local support groups**")      
+        st.write([
+    {"name": "Susan G. Komen Nashville", "phone": "(615) 673-6633", "website": "https://komen.org/nashville"},
+    {"name": "Vanderbilt Breast Cancer Support Group", "phone": "(615) 322-3900", "website": "https://www.vicc.org/support-groups"},
+    {"name": "Alive Hospice Cancer Support", "phone": "(615) 327-1085", "website": "https://alivehospice.org"}
+])
