@@ -156,4 +156,4 @@ with tab3:
 ]
 support_df = pd.DataFrame(support)
 support_df["Website"] = support_df["Website"].apply(lambda url: f"[Visit]({url})")
-st.table(supprot_df)
+st.table(support_df)
