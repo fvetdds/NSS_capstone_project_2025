@@ -23,16 +23,80 @@ st.set_page_config(page_title="Breast Cancer Risk Prediction", layout="wide")
 
 st.markdown("""
     <style>
-    .navbar-logo {
-        font-size: 2.5rem; font-weight: bold; color: #FFD700;
-        display: flex; align-items: center; white-space: nowrap;
-        margin-left: 2.4em; margin-top: 1.2em; margin-bottom: 0.2em;
+    /* 1) Import a clean, modern font */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
+
+    /* 2) Page background and base font */
+    body, .css-1d391kg {
+      background-color: #f4f6f8;
+      font-family: 'Poppins', sans-serif;
     }
-    .navbar-logo span { font-size: 2.2rem; margin-right: 0.6em; }
+
+    /* 3) Navbar container */
+    nav.navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.8rem 2rem;
+      background: linear-gradient(90deg, #ff8a65, #ffca28);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      border-radius: 0 0 12px 12px;
+      margin-bottom: 1.5rem;
+    }
+
+    /* 4) Logo styling */
+    .navbar-logo {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+    }
+    .navbar-logo span {
+      margin-right: 0.6em;
+    }
+
+    /* 5) Nav links */
+    ul.navbar-links {
+      list-style: none;
+      display: flex;
+      gap: 1.8rem;
+      margin: 0;
+      padding: 0;
+    }
+    ul.navbar-links li a {
+      color: #ffffff;
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 0.3s ease, transform 0.2s ease;
+    }
+    ul.navbar-links li a:hover {
+      color: #212121;
+      transform: translateY(-2px);
+    }
+
+    /* 6) Custom divider */
+    hr.divider {
+      border: none;
+      height: 4px;
+      background: #ffca28;
+      border-radius: 2px;
+      margin: 1.5rem 0;
+    }
     </style>
-    <div class="navbar-logo"><span>🎗️</span> EmpowerHER</div>
+
+    <nav class="navbar">
+      <div class="navbar-logo"><span>🎗️</span> EmpowerHER</div>
+      <ul class="navbar-links">
+        <li><a href="#About">About</a></li>
+        <li><a href="#Breast Cancer Risk Prediction">Breast Cancer Risk Prediction</a></li>
+        <li><a href="#Mind & Move">Mind & Move</a></li>
+      </ul>
+    </nav>
+
+    <hr class="divider"/>
 """, unsafe_allow_html=True)
-st.markdown("---")
+
 tab1, tab2, tab3 = st.tabs(["About", "Breast Cancer Risk Prediction", "Mind & Move"])
 
 # ─── 3) Load your pickled model & threshold ────────────────────────────────────
