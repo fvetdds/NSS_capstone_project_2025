@@ -91,7 +91,7 @@ st.markdown("""
     <nav class="navbar">
       <div class="navbar-logo">
         <!-- replace this URL with your actual logo image -->
-        <img src="https://your-cdn.com/images/logo.png" alt="EmpowerHER Logo">
+        <img src="figures/title icon.png" alt="EmpowerHER Logo">
         <span>🎗️ EmpowerHER</span>
     </nav>
 
