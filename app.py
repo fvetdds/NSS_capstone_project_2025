@@ -129,7 +129,7 @@ with tab3:
     if st.button("Save Entry"):
         st.success("Your daily wellness entry has been recorded!")  
         st.json(entry)
-    st.subheader("Additional Resources")More actions    
+    st.subheader("Additional Resources")   
     st.markdown("**YouTube Videos:**")    
     videos = {        
         "Mindfulness Meditation for Cancer Support": "https://www.youtube.com/watch?v=1ZYbU82GVz4&t=31s",        "Gentle Move for All": "https://www.youtube.com/watch?v=Ev6yE55kYGw&t=169s",        "Healthy Eating During Cancer Treatment": "https://www.youtube.com/shorts/kkk8UPd7l38"    }   
