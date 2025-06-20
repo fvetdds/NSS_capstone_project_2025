@@ -29,7 +29,7 @@ def img_to_base64(img_path):
     return base64.b64encode(data).decode()
 
 # Updated icon image path
-icon_base64 = img_to_base64("figures/title icon2.png")
+icon_base64 = img_to_base64("figures/title_icon2.png")
 
 st.markdown(f"""
     <style>
