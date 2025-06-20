@@ -6,21 +6,19 @@ import sys
 import types
 from pathlib import Path
 
-# ─── 1) Stub out the custom objective so joblib can find it ───────────────────
-# We only need a dummy implementation here—the model won't actually call it at inference.
+#define weighted_logloss
+
 def weighted_logloss(y_true: np.ndarray, y_pred: np.ndarray):
     grad = np.zeros_like(y_pred)
     hess = np.zeros_like(y_pred)
     return grad, hess
 
-# Inject into the original training module name:
-fake_mod = types.ModuleType("model_train")
-fake_mod.weighted_logloss = weighted_logloss
-sys.modules["model_train"] = fake_mod
-# Also inject into __main__ in case pickle recorded it there:
-sys.modules["__main__"] = fake_mod
+# add in the original training module name:
+mod = types.ModuleType("model_train")
+mod.weighted_logloss = weighted_logloss
+sys.modules["model_train"] = mod
 
-# ─── 2) Streamlit page setup ───────────────────────────────────────────────────
+# Streamlit page setup 
 st.set_page_config(page_title="Breast Cancer Risk Prediction", layout="wide")
 
 st.markdown("""
