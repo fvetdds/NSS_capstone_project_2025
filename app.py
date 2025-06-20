@@ -135,7 +135,7 @@ with tab3:
     videos = {
     "Mindfulness Meditation for Cancer Support": "https://www.youtube.com/watch?v=1ZYbU82GVz4&t=31s",
     "Gentle Move for All":                     "https://www.youtube.com/watch?v=Ev6yE55kYGw&t=169s",
-    "Healthy Eating During Cancer Treatment":   "https://www.youtube.com/shorts/kkk8UPd7l38"
+    "Healthy Eating During Cancer Treatment":   "https://www.youtube.com/shorts/zci6v7TINa4"
 }
 
     st.markdown("## 🎥 YouTube Videos")
@@ -147,8 +147,13 @@ with tab3:
 
     st.markdown("## 🤝 Local Support Groups")
     support = [
+      {"Name": "American Cancer Society Middle Tennessee",            "Phone": "(800) 227-2345 (toll free)", "Website": "https://www.cancer.org/about-us/local/tennessee.html"},
+     {"Name": "Cancer Support Community Middle Tennessee",            "Phone": "(615) 329-5266", "Website": "https://cancersupportcommunity.org/middletn"},
     {"Name": "Susan G. Komen Nashville",            "Phone": "(615) 673-6633", "Website": "https://komen.org/nashville"},
     {"Name": "Vanderbilt Breast Cancer Support Group","Phone": "(615) 322-3900", "Website": "https://www.vicc.org/support-groups"},
-    {"Name": "Alive Hospice Cancer Support",        "Phone": "(615) 327-1085", "Website": "https://alivehospice.org"}
+    {"Name": "Alive Hospice Cancer Support",        "Phone": "(615) 327-1085", "Website": "https://alivehospice.org"},
+    {"Name": "YMCA of Middle Tennessee – LIVESTRONG® at the Y", "Website": "https://ymcamidtn.org/program/livestrong"}
 ]
- 
+support_df = pd.DataFrame(support)
+support_df["Website"] = support_df["Website"].apply(lambda url: f"[Visit]({url})")
+st.table(supprot_df)
