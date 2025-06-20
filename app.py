@@ -135,7 +135,7 @@ with tab3:
     videos = {
     "Mindfulness Meditation for Cancer Support": "https://www.youtube.com/watch?v=1ZYbU82GVz4&t=31s",
     "Gentle Move for All":                     "https://www.youtube.com/watch?v=Ev6yE55kYGw&t=169s",
-    "Healthy Eating During Cancer Treatment":   "https://www.youtube.com/shorts/zci6v7TINa4"
+    "Healthy Eating During Cancer Treatment":   "https://www.youtube.com/watch?v=VaVC3PAWqLk&t=1353s"
 }
 
     st.markdown("## 🎥 YouTube Videos")
