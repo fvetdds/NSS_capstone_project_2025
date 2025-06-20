@@ -53,7 +53,7 @@ We use a **0.98** probability threshold to flag “High risk.”
     st.markdown("Users can select demographic and clinical data to see the model risk prediction.")
     st.image("figures/feature_importance_xgb.png", width=900)
     st.markdown("This plot shows the top predictors the model relies on.")
-    st.image("figures/P-R chart.png", width=900)
+    st.image("figures/P-R chart2.png", width=900)
     st.markdown("Precision–Recall curve for this XGBoost classifier model.")
 # ─── 5) Tab 2: Risk Insights ────────────────────────────────────────────────────
 with tab2:
@@ -128,3 +128,18 @@ with tab3:
         st.metric("Hydration", f"{water} glasses", f"{8-water} to goal")
     if st.button("Save Entry"):
         st.success("Your daily wellness entry has been recorded!")  
+        st.json(entry)
+    st.subheader("Additional Resources")More actions    
+    st.markdown("**YouTube Videos:**")    
+    videos = {        
+        "Mindfulness Meditation for Cancer Support": "https://www.youtube.com/watch?v=1ZYbU82GVz4&t=31s",        "Gentle Move for All": "https://www.youtube.com/watch?v=Ev6yE55kYGw&t=169s",        "Healthy Eating During Cancer Treatment": "https://www.youtube.com/shorts/kkk8UPd7l38"    }   
+    for title, url in videos.items():        
+        st.markdown(f"- [{title}]({url})")    
+        st.markdown("**Local Support Groups in Nashville, TN:**")    
+        support_groups = [       
+            {"name": "Susan G. Komen Nashville", "phone": "(615) 673-6633","website": "https://komen.org/nashville"},        
+            { "name": "Vanderbilt Breast Cancer Support Group", "phone": "(615) 322-3900","website": "https://www.vicc.org/support-groups"        },        
+            { "name": "Alive Hospice Cancer Support","phone": "(615) 327-1085","website": "https://alivehospice.org"}]    
+    for grp in support_groups:        
+        st.markdown(f"- **{grp['name']}**: {grp['phone']} | [Website]({grp['website']})")
+
