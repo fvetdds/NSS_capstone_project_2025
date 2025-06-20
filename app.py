@@ -53,7 +53,7 @@ We use a **0.98** probability threshold to flag “High risk.”
     st.markdown("Users can select demographic and clinical data to see the model risk prediction.")
     st.image("figures/feature_importance_xgb.png", width=900)
     st.markdown("This plot shows the top predictors the model relies on.")
-    st.image("figures/P-R chart.png", width=900)
+    st.image("figures/P-R chart2.png", width=900)
     st.markdown("Precision–Recall curve for this XGBoost classifier model.")
 # ─── 5) Tab 2: Risk Insights ────────────────────────────────────────────────────
 with tab2:
