@@ -141,8 +141,8 @@ with tab3:
     st.markdown("## 🎥 YouTube Videos")
     cols = st.columns(len(videos))
     for col, (title, url) in zip(cols, videos.items()):
-    col.video(url)
-    col.caption(f"**{title}**")
+        col.video(url)
+        col.caption(f"**{title}**")
 
 
     st.markdown("## 🤝 Local Support Groups")
