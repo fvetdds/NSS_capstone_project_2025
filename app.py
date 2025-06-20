@@ -129,15 +129,26 @@ with tab3:
     if st.button("Save Entry"):
         st.success("Your daily wellness entry has been recorded!")  
         st.json(entry)
-    st.subheader("Additional Resources")   
-    st.markdown("**YouTube Videos:**")    
-    videos = {        
-        "Mindfulness Meditation for Cancer Support": "https://www.youtube.com/watch?v=1ZYbU82GVz4&t=31s",        
-        "Gentle Move for All": "https://www.youtube.com/watch?v=Ev6yE55kYGw&t=169s",        
-        "Healthy Eating During Cancer Treatment": "https://www.youtube.com/shorts/kkk8UPd7l38"    }   
-    st.markdown("**Local support groups**")      
-    st.write([
-    {"name": "Susan G. Komen Nashville", "phone": "(615) 673-6633", "website": "https://komen.org/nashville"},
-    {"name": "Vanderbilt Breast Cancer Support Group", "phone": "(615) 322-3900", "website": "https://www.vicc.org/support-groups"},
-    {"name": "Alive Hospice Cancer Support", "phone": "(615) 327-1085", "website": "https://alivehospice.org"}
-])
+    
+
+    st.title("Additional Resources")
+    videos = {
+    "Mindfulness Meditation for Cancer Support": "https://www.youtube.com/watch?v=1ZYbU82GVz4&t=31s",
+    "Gentle Move for All":                     "https://www.youtube.com/watch?v=Ev6yE55kYGw&t=169s",
+    "Healthy Eating During Cancer Treatment":   "https://www.youtube.com/shorts/kkk8UPd7l38"
+}
+
+    st.markdown("## 🎥 YouTube Videos")
+    cols = st.columns(len(videos))
+    for col, (title, url) in zip(cols, videos.items()):
+    col.video(url)
+    col.caption(f"**{title}**")
+
+
+    st.markdown("## 🤝 Local Support Groups")
+    support = [
+    {"Name": "Susan G. Komen Nashville",            "Phone": "(615) 673-6633", "Website": "https://komen.org/nashville"},
+    {"Name": "Vanderbilt Breast Cancer Support Group","Phone": "(615) 322-3900", "Website": "https://www.vicc.org/support-groups"},
+    {"Name": "Alive Hospice Cancer Support",        "Phone": "(615) 327-1085", "Website": "https://alivehospice.org"}
+]
+ 
