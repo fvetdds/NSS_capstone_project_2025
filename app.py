@@ -21,12 +21,15 @@ sys.modules["model_train"] = mod
 # Streamlit page setup 
 st.set_page_config(page_title="Breast Cancer Risk Prediction", layout="wide")
 
+import base64
+
 def img_to_base64(img_path):
     with open(img_path, "rb") as f:
         data = f.read()
     return base64.b64encode(data).decode()
 
-icon_base64 = img_to_base64("figures/title icon.png")
+# Updated icon image path
+icon_base64 = img_to_base64("figures/title icon2.png")
 
 st.markdown(f"""
     <style>
