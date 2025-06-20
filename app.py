@@ -23,40 +23,43 @@ st.set_page_config(page_title="Breast Cancer Risk Prediction", layout="wide")
 
 st.markdown("""
     <style>
-    /* 1) Import a clean, modern font */
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
+    body { font-family: 'Poppins', sans-serif; background-color: #f4f6f8; }
 
-    /* 2) Page background and base font */
-    body, .css-1d391kg {
-      background-color: #f4f6f8;
-      font-family: 'Poppins', sans-serif;
-    }
-
-    /* 3) Navbar container */
+    /* Navbar with background image + gradient overlay */
     nav.navbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0.8rem 2rem;
-      background: linear-gradient(90deg, #ff8a65, #ffca28);
+      padding: 1rem 2rem;
+      /* first layer: background image, second: gradient */
+      background:
+        url('https://your-cdn.com/images/hero_bg.jpg') center/cover no-repeat,
+        linear-gradient(90deg, #ff8a65, #ffca28);
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       border-radius: 0 0 12px 12px;
       margin-bottom: 1.5rem;
     }
 
-    /* 4) Logo styling */
+    /* Logo + ribbon */
     .navbar-logo {
-      font-size: 2.2rem;
-      font-weight: 700;
-      color: #ffffff;
       display: inline-flex;
       align-items: center;
+      color: #ffffff;
+      font-size: 2.2rem;
+      font-weight: 700;
     }
-    .navbar-logo span {
+    .navbar-logo img {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
       margin-right: 0.6em;
+      border-radius: 8px;
+      /* subtle shadow to lift it off the background */
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     }
 
-    /* 5) Nav links */
+    /* Links styling remains the same */
     ul.navbar-links {
       list-style: none;
       display: flex;
@@ -75,7 +78,7 @@ st.markdown("""
       transform: translateY(-2px);
     }
 
-    /* 6) Custom divider */
+    /* Divider under navbar */
     hr.divider {
       border: none;
       height: 4px;
@@ -86,12 +89,10 @@ st.markdown("""
     </style>
 
     <nav class="navbar">
-      <div class="navbar-logo"><span>🎗️</span> EmpowerHER</div>
-      <ul class="navbar-links">
-        <li><a href="#About">About</a></li>
-        <li><a href="#Breast Cancer Risk Prediction">Breast Cancer Risk Prediction</a></li>
-        <li><a href="#Mind & Move">Mind & Move</a></li>
-      </ul>
+      <div class="navbar-logo">
+        <!-- replace this URL with your actual logo image -->
+        <img src="https://your-cdn.com/images/logo.png" alt="EmpowerHER Logo">
+        <span>🎗️ EmpowerHER</span>
     </nav>
 
     <hr class="divider"/>
