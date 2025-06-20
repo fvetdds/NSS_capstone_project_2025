@@ -5,7 +5,7 @@ import joblib
 import sys
 import types
 from pathlib import Path
-
+import base64
 #define weighted_logloss
 
 def weighted_logloss(y_true: np.ndarray, y_pred: np.ndarray):
@@ -21,78 +21,70 @@ sys.modules["model_train"] = mod
 # Streamlit page setup 
 st.set_page_config(page_title="Breast Cancer Risk Prediction", layout="wide")
 
-st.markdown("""
+def img_to_base64(img_path):
+    with open(img_path, "rb") as f:
+        data = f.read()
+    return base64.b64encode(data).decode()
+
+icon_base64 = img_to_base64("figures/title icon.png")
+
+st.markdown(f"""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
-    body { font-family: 'Poppins', sans-serif; background-color: #f4f6f8; }
+    body {{ font-family: 'Poppins', sans-serif; background-color: #f4f6f8; }}
 
-    /* Navbar with background image + gradient overlay */
-    nav.navbar {
+    nav.navbar {{
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 1rem 2rem;
-      /* first layer: background image, second: gradient */
-      background:
-        url('https://your-cdn.com/images/hero_bg.jpg') center/cover no-repeat,
-        linear-gradient(90deg, #ff8a65, #ffca28);
+      background: linear-gradient(90deg, #ff8a65, #ffca28);
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       border-radius: 0 0 12px 12px;
       margin-bottom: 1.5rem;
-    }
+    }}
 
-    /* Logo + ribbon */
-    .navbar-logo {
+    .navbar-logo {{
       display: inline-flex;
       align-items: center;
       color: #ffffff;
-      font-size: 2.2rem;
-      font-weight: 700;
-    }
-    .navbar-logo img {
+      font-size: 2.8rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      background: linear-gradient(90deg, #ff6a00, #ffca28);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.25);
+      transition: filter 0.3s ease;
+    }}
+    .navbar-logo img {{
       width: 48px;
       height: 48px;
       object-fit: contain;
-      margin-right: 0.6em;
+      margin-right: 0.8em;
       border-radius: 8px;
-      /* subtle shadow to lift it off the background */
       box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    }
+    }}
 
-    /* Links styling remains the same */
-    ul.navbar-links {
-      list-style: none;
-      display: flex;
-      gap: 1.8rem;
-      margin: 0;
-      padding: 0;
-    }
-    ul.navbar-links li a {
-      color: #ffffff;
-      font-weight: 500;
-      text-decoration: none;
-      transition: color 0.3s ease, transform 0.2s ease;
-    }
-    ul.navbar-links li a:hover {
-      color: #212121;
-      transform: translateY(-2px);
-    }
+    .navbar-logo:hover {{
+      filter: brightness(1.1) drop-shadow(0 0 6px #ffca28);
+      cursor: pointer;
+    }}
 
-    /* Divider under navbar */
-    hr.divider {
+    hr.divider {{
       border: none;
       height: 4px;
       background: #ffca28;
       border-radius: 2px;
       margin: 1.5rem 0;
-    }
+    }}
     </style>
 
     <nav class="navbar">
       <div class="navbar-logo">
-        <!-- replace this URL with your actual logo image -->
-        <img src="figures/title icon.png" alt="EmpowerHER Logo">
-        <span>🎗️ EmpowerHER</span>
+        <img src="data:image/png;base64,{icon_base64}" alt="EmpowerHER Logo">
+        <span>EmpowerHER</span>
+      </div>
     </nav>
 
     <hr class="divider"/>
