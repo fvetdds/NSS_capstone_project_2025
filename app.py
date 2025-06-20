@@ -33,7 +33,7 @@ st.markdown("""
     <div class="navbar-logo"><span>🎗️</span> EmpowerHER</div>
 """, unsafe_allow_html=True)
 st.markdown("---")
-tab1, tab2, tab3 = st.tabs(["About", "Risk Insights", "Mind & Move"])
+tab1, tab2, tab3 = st.tabs(["About", "Breast Cancer Risk Prediction", "Mind & Move"])
 
 # ─── 3) Load your pickled model & threshold ────────────────────────────────────
 BASE_DIR = Path(__file__).resolve().parent
@@ -45,13 +45,16 @@ with tab1:
     st.markdown("### 📊 About this Breast Cancer Risk Model")
     st.markdown("""
 **XGBoost** is a state-of-the-art tree-based model for tabular data, capturing complex feature interactions.  
-We trained it on the BCSC cohort (millions of mammograms) with a custom weighted log-loss to prioritize cancer detection,  
-achieving **89% overall accuracy**, **52% recall** on true cancer cases, and **0.91 ROC-AUC**.  
-We use a **0.82** probability threshold to flag “High risk.”  
+I trained it on the Brest Cancer Surveillance Consortium **BCSC** cohort https://www.bcsc-research.org/index.php/datasets/rf/documentation with a custom weighted log-loss to prioritize cancer detection,  
+achieving **89% overall accuracy**, **52% recall** on true cancer cases, **Matthews Correlation Coefficient: 0.54** and **0.92 ROC-AUC**.  
+We use a **0.98** probability threshold to flag “High risk.”  
 """)
+    st.image("figures/empowerher_risk_pipeline_clean.png", width=900)
+    st.markdown("Users can select demographic and clinical data to see the model risk prediction.")
     st.image("figures/feature_importance_xgb.png", width=900)
     st.markdown("This plot shows the top predictors the model relies on.")
-
+    st.image("figures/P-R chart.png", width=900)
+    st.markdown("Precision–Recall curve for this XGBoost classifier model.")
 # ─── 5) Tab 2: Risk Insights ────────────────────────────────────────────────────
 with tab2:
     with st.expander("Enter your details for risk prediction", expanded=True):
