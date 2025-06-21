@@ -95,19 +95,34 @@ st.markdown(f"""
 
 tab1, tab2, tab3 = st.tabs(["About", "Breast Cancer Risk Prediction", "Mind & Move"])
 
-# ─── 3) Load your pickled model & threshold ────────────────────────────────────
+# load model
 BASE_DIR = Path(__file__).resolve().parent
 model     = joblib.load(BASE_DIR / "models" / "bcsc_xgb_model.pkl")
 threshold = joblib.load(BASE_DIR / "models" / "threshold.pkl")
 
-# ─── 4) Tab 1: About ───────────────────────────────────────────────────────────
+# Tab 1: About 
 with tab1:
     st.markdown("### 📊 About this Breast Cancer Risk Model")
     st.markdown("""
-**XGBoost** is a state-of-the-art tree-based model for tabular data, capturing complex feature interactions.  
-I trained it on the Brest Cancer Surveillance Consortium **BCSC** cohort https://www.bcsc-research.org/index.php/datasets/rf/documentation with a custom weighted log-loss to prioritize cancer detection,  
-achieving **89% overall accuracy**, **52% recall** on true cancer cases, **Matthews Correlation Coefficient: 0.54** and **0.92 ROC-AUC**.  
-We use a **0.98** probability threshold to flag “High risk.”  
+**XGBoost** is a state-of-the-art tree-based model for tabular data, capturing complex feature interactions. The model was trained on the Brest Cancer Surveillance Consortium **BCSC** cohort https://www.bcsc-research.org/index.php/datasets/rf/documentation with a custom weighted log-loss that was penalizing missed cancers much more heavily than false alarms to prioritize cancer detection. Predictions may be less reliable for populations under-represented e.g. certain ethnic groups, uninsured women, different health-care systems.
+ ****This is a research model, not a medical diagnosis. Please consult your doctor****.
+
+***How we know this breast cancer risk model is any good***
+When you hear things like “89% accuracy” or “52% recall,” it can feel like jargon. Here’s what those numbers really mean and why we chose them, what they tell us about the model, and why they matter for you.
+***Overall Accuracy***
+Think of accuracy like a simple “right vs. wrong” score. If the model makes 100 predictions about who might develop breast cancer and who won’t—and 89 of those guesses match reality—that’s 89% accuracy.
+***Recall***: Catching the real cases
+If 100 women truly had early‐stage cancer and our model flagged 52 of them, recall is 52%.
+
+We use a **0.98** probability threshold to flag “High risk.”  Probability Threshold: Deciding “High Risk”
+0.98 threshold
+
+Every risk‐prediction model spits out a score between 0 and 1—for example, 0.75 means “75% risk.” But at what point do we call someone “high risk”? We picked 0.98 to balance our priorities:
+
+Above 0.98 → flag as “high risk” and recommend follow-up.
+
+Below 0.98 → “low risk,” continue routine care.
+
 """)
     st.image("figures/empowerher_risk_pipeline_clean.png", width=900)
     st.markdown("Users can select demographic and clinical data to see the model risk prediction.")
@@ -115,7 +130,7 @@ We use a **0.98** probability threshold to flag “High risk.”
     st.markdown("This plot shows the top predictors the model relies on.")
     st.image("figures/P-R chart2.png", width=900)
     st.markdown("Precision–Recall curve for this XGBoost classifier model.")
-# ─── 5) Tab 2: Risk Insights ────────────────────────────────────────────────────
+# Tab 2: Risk Insights 
 with tab2:
     with st.expander("Enter your details for risk prediction", expanded=True):
         def sel(label, opts):
@@ -150,7 +165,7 @@ with tab2:
     prob     = model.predict_proba(df_new)[0, 1]
 
     risk_str = "High risk" if prob >= threshold else "Low risk"
-    icon     = "⚠️" if risk_str=="High risk" else "✅"
+    icon     = " if risk_str=="High risk" else "✅"
 
     st.subheader("Your Predicted Risk")
     st.write(f"Probability of breast cancer: **{prob:.1%}**")
@@ -158,6 +173,30 @@ with tab2:
         st.error(f"{icon} {risk_str}  (threshold = {threshold:.2f})")
     else:
         st.success(f"{icon} {risk_str}  (threshold = {threshold:.2f})")
+        import streamlit as st
+import numpy as np
+import pandas as pd
+
+# … after you compute `prob` for this specific user …
+
+st.subheader("Your Predicted Risk")
+
+# 1) Show the raw probability
+st.write(f"🔍 Model’s estimated probability of breast cancer: **{prob:.1%}**")
+
+# 2) Let the user play with the threshold
+threshold = st.slider(
+    "Adjust the ‘high‐risk’ cutoff:",
+    min_value=0.0,
+    max_value=1.0,
+    value=0.98,
+    step=0.01
+)
+
+# 3) Show resulting classification
+risk_str = "High risk ⚠️" if prob >= threshold else "Low risk ✅"
+st.write(f"At threshold = **{threshold:.2f}**, this person is classified as: **{risk_str}**")
+
 
 # ─── 6) Tab 3: Mind & Move ─────────────────────────────────────────────────────
 with tab3:
