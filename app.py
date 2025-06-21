@@ -171,7 +171,7 @@ with tab3:
         "💧 Drink 8 glasses of water",
         "😴 Get 7–8 h sleep"
     ]:
-       with st.form("wellness_form"):
+    with st.form("wellness_form"):
         st.subheader("Tracker")
         c1, c2, c3 = st.columns(3)
         with c1:
