@@ -165,7 +165,7 @@ with tab2:
     prob     = model.predict_proba(df_new)[0, 1]
 
     risk_str = "High risk" if prob >= threshold else "Low risk"
-    icon     = " if risk_str=="High risk" else "✅"
+    icon     = "⚠️" if risk_str=="High risk" else "✅"
 
     st.subheader("Your Predicted Risk")
     st.write(f"Probability of breast cancer: **{prob:.1%}**")
