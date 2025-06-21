@@ -172,42 +172,50 @@ with tab3:
         "😴 Get 7–8 h sleep"
     ]:
         st.markdown(f"- {tip}")
-    with st.form("wellness_form"):
-        st.subheader("Tracker")
-        c1, c2, c3 = st.columns(3)
-        with c1:
-            med = st.number_input("Meditation (min)", min_value=0, max_value=60, value=0)
-            st.progress(med / 10, text=f"{med} / 10 min")
-            st.metric("Meditation", f"{med} min", f"{10-med} to goal")
+   st.subheader("Tracker")
+    c1, c2, c3 = st.columns(3)
+    with c1:
+        med = st.number_input("Meditation (min)", min_value=0, max_value=60, value=0)
+        st.progress(med / 10, text=f"{med} / 10 min")
+        st.metric("Meditation", f"{med} min", f"{10-med} to goal")
 
-        with c2:
-            ex = st.number_input("Exercise (min)", min_value=0, max_value=180, value=0)
-            st.progress(ex / 30, text=f"{ex} / 30 min")
-            st.metric("Exercise", f"{ex} min", f"{30-ex} to goal")
+    with c2:
+        ex = st.number_input("Exercise (min)", min_value=0, max_value=180, value=0)
+        st.progress(ex / 30, text=f"{ex} / 30 min")
+        st.metric("Exercise", f"{ex} min", f"{30-ex} to goal")
 
-        with c3:
-            water = st.number_input("Water (glasses)", min_value=0, max_value=20, value=0)
-            st.progress(water / 8, text=f"{water} / 8 glasses")
-            st.metric("Hydration", f"{water} glasses", f"{8-water} to goal")
+    with c3:
+        water = st.number_input("Water (glasses)", min_value=0, max_value=20, value=0)
+        st.progress(water / 8, text=f"{water} / 8 glasses")
+        st.metric("Hydration", f"{water} glasses", f"{8-water} to goal")
 
-        submitted = st.form_submit_button("Save Entry")
+    # 3) Overall progress + mood emoji
+    overall = np.mean([med/10, ex/30, water/8])
+    if overall == 0:
+        mood = "😔"
+    elif overall < 0.4:
+        mood = "😐"
+    elif overall < 0.6:
+        mood = "🙂"
+    elif overall < 0.8:
+        mood = "😃"
+    else:
+        mood = "🤩"
 
-    if submitted:
-        # build your entry dict here
+    st.subheader(f"Overall Wellness Progress {mood}")
+    st.progress(overall, text=f"{overall*100:.0f}% complete")
+# 4) Save button
+    if st.button("Save Entry"):
         entry = {
             "Meditation (min)": med,
             "Exercise (min)":   ex,
             "Water (glasses)":  water,
             "Timestamp":        pd.Timestamp.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "Mood":             mood
         }
-
-        # overall progress = average of the three goal percentages
-        overall = np.mean([med/10, ex/30, water/8])
-        st.subheader("Overall Wellness Progress")
-        st.progress(overall, text=f"{overall*100:.0f}%")
-
         st.success("✅ Your daily wellness entry has been recorded!")
         st.json(entry)
+
     
 
     st.title("Additional Resources")
