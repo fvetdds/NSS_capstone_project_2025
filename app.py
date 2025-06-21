@@ -162,34 +162,39 @@ with tab2:
 # ─── 6) Tab 3: Mind & Move ─────────────────────────────────────────────────────
 with tab3:
     st.header("Glow and Grow")
-    st.write("Every healthy choice you make today is a step toward a brighter, happier you. You’ve got this!")
+    st.write(
+        "Every healthy choice you make today is a step toward "
+        "a brighter, happier you. You’ve got this!"
+    )
+
+    # 1) Daily Rituals
     st.subheader("Daily Rituals")
     for tip in [
         "🧘 Practice 10 min mindfulness",
         "🥗 Eat ≥5 servings fruits/veggies",
         "🚶‍♀️ Take a 30 min walk",
         "💧 Drink 8 glasses of water",
-        "😴 Get 7–8 h sleep"
+        "😴 Get 7–8 h sleep",
     ]:
         st.markdown(f"- {tip}")
-   st.subheader("Tracker")
+
+    # 2)Tracker
+    st.subheader("Tracker")
     c1, c2, c3 = st.columns(3)
     with c1:
-        med = st.number_input("Meditation (min)", min_value=0, max_value=60, value=0)
+        med = st.number_input("Meditation (min)", 0, 60, 0, key="med")
         st.progress(med / 10, text=f"{med} / 10 min")
         st.metric("Meditation", f"{med} min", f"{10-med} to goal")
-
     with c2:
-        ex = st.number_input("Exercise (min)", min_value=0, max_value=180, value=0)
+        ex = st.number_input("Exercise (min)", 0, 180, 0, key="ex")
         st.progress(ex / 30, text=f"{ex} / 30 min")
         st.metric("Exercise", f"{ex} min", f"{30-ex} to goal")
-
     with c3:
-        water = st.number_input("Water (glasses)", min_value=0, max_value=20, value=0)
+        water = st.number_input("Water (glasses)", 0, 20, 0, key="water")
         st.progress(water / 8, text=f"{water} / 8 glasses")
         st.metric("Hydration", f"{water} glasses", f"{8-water} to goal")
 
-    # 3) Overall progress + mood emoji
+    # 3) mood imoji
     overall = np.mean([med/10, ex/30, water/8])
     if overall == 0:
         mood = "😔"
@@ -202,22 +207,21 @@ with tab3:
     else:
         mood = "🤩"
 
-    st.subheader(f"Overall Wellness Progress {mood}")
+    # 4) Show overall with emoji in the same call
+    st.markdown(f"### Overall Wellness Progress  {mood}")
     st.progress(overall, text=f"{overall*100:.0f}% complete")
-# 4) Save button
+
+    # 5) Save Entry button
     if st.button("Save Entry"):
         entry = {
             "Meditation (min)": med,
             "Exercise (min)":   ex,
             "Water (glasses)":  water,
             "Timestamp":        pd.Timestamp.now().strftime("%Y-%m-%d %H:%M:%S"),
-            "Mood":             mood
+            "Mood":             mood,
         }
         st.success("✅ Your daily wellness entry has been recorded!")
         st.json(entry)
-
-    
-
     st.title("Additional Resources")
     videos = {
     "Mindfulness Meditation for Cancer Support": "https://www.youtube.com/watch?v=1ZYbU82GVz4&t=31s",
