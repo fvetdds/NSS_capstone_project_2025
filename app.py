@@ -167,7 +167,7 @@ with tab3:
         "a brighter, happier you. You’ve got this!"
     )
 
-    # 1) Daily Rituals
+    # Daily Rituals
     st.subheader("Daily Rituals")
     for tip in [
         "🧘 Practice 10 min mindfulness",
@@ -178,7 +178,7 @@ with tab3:
     ]:
         st.markdown(f"- {tip}")
 
-    # 2)Tracker
+    # Live‐updating Tracker
     st.subheader("Tracker")
     c1, c2, c3 = st.columns(3)
     with c1:
@@ -194,7 +194,7 @@ with tab3:
         st.progress(water / 8, text=f"{water} / 8 glasses")
         st.metric("Hydration", f"{water} glasses", f"{8-water} to goal")
 
-    # 3) mood imoji
+    # Compute overall + mood
     overall = np.mean([med/10, ex/30, water/8])
     if overall == 0:
         mood = "😔"
@@ -207,11 +207,14 @@ with tab3:
     else:
         mood = "🤩"
 
-    # 4) Show overall with emoji in the same call
-    st.markdown(f"### Overall Wellness Progress  {mood}")
-    st.progress(overall, text=f"{overall*100:.0f}% complete")
+    # Show as a metric: big number + emoji
+    st.metric(
+        label="Overall Wellness Progress",
+        value=f"{overall*100:.0f}%",
+        delta=mood
+    )
 
-    # 5) Save Entry button
+    # Save button
     if st.button("Save Entry"):
         entry = {
             "Meditation (min)": med,
